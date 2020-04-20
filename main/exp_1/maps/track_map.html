@@ -41,20 +41,19 @@
     </style>
   </head>
   <body>
-    <div id="floating-panel">
+    <!-- <div id="floating-panel">
       <button onclick="changeTrackmap(0)">Vaca 1</button>
       <button onclick="changeTrackmap(1)">Vaca 2</button>
       <button onclick="changeTrackmap(2)">Vaca 3</button>
       <button onclick="changeTrackmap(3)">Vaca 4</button>
-
-    </div>
+    </div> -->
     <div id="map"></div>
-    <script type="text/javascript" src="../../../data/exp_1/cow_1.json"></script>
+    <!-- <script type="text/javascript" src="../../../data/exp_1/cow_1.json"></script>
     <script type="text/javascript" src="../../../data/exp_1/cow_2.json"></script>
-    <script type="text/javascript" src="../../../data/exp_1/cow_3.json"></script>
+    <script type="text/javascript" src="../../../data/exp_1/cow_3.json"></script> -->
     <script type="text/javascript" src="../../../data/exp_1/cow_4.json"></script>
     <script>
-      cows = [cow_1, cow_2, cow_3, cow_4]
+      cows = [cow_4]
       function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 18,
