@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Simple Polylines</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+      #floating-panel {
+        background-color: #fff;
+        border: 1px solid #999;
+        left: 25%;
+        padding: 5px;
+        position: absolute;
+        top: 10px;
+        z-index: 5;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="floating-panel">
+      <button onclick="changeTrackmap(0)">Vaca 1</button>
+      <button onclick="changeTrackmap(1)">Vaca 2</button>
+      <button onclick="changeTrackmap(2)">Vaca 3</button>
+      <button onclick="changeTrackmap(3)">Vaca 4</button>
+
+    </div>
+    <div id="map"></div>
+    <script type="text/javascript" src="../../../data/exp_1/cow_1.json"></script>
+    <script type="text/javascript" src="../../../data/exp_1/cow_2.json"></script>
+    <script type="text/javascript" src="../../../data/exp_1/cow_3.json"></script>
+    <script type="text/javascript" src="../../../data/exp_1/cow_4.json"></script>
+    <script>
+      cows = [cow_1, cow_2, cow_3, cow_4]
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 18,
+          center: {lat: -8.975696, lng: -36.454287},
+          mapTypeId: 'terrain'
+        });
+        var flightPlanCoordinates = getPoints(0);
+        var flightPath = new google.maps.Polyline({
+          path: flightPlanCoordinates,
+          geodesic: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        });
+        flightPath.setMap(map);
+      }
+      function getPoints(n_cow) {
+        data = cows[n_cow]
+        markers = []
+        for (n in data) {
+          markers[n] = {lat: parseFloat(data[n].lat), lng: parseFloat(data[n].lng) }
+        };
+        return markers;
+      }
+      function changeTrackmap(n_cow) {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 18,
+          center: {lat: -8.975696, lng: -36.454287},
+          mapTypeId: 'terrain'
+        });
+        var flightPlanCoordinates = getPoints(n_cow);
+        var flightPath = new google.maps.Polyline({
+          path: flightPlanCoordinates,
+          geodesic: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        });
+        flightPath.setMap(map);
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFKwUvNG5SBvqlaMteDW7EEOWK2hRZc8o&libraries=visualization&callback=initMap">
+</script>
+  </body>
+</html>
