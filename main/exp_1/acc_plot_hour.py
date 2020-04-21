@@ -8,9 +8,9 @@ if __name__ == "__main__":
     for line in file.readlines():
         raw_ts, raw_Ax, raw_Ay, raw_Az, *_  = line.strip().split(';')
         ts.append(int(raw_ts))
-        Ax.append(float(raw_Ax))
-        Ay.append(float(raw_Ay))
-        Az.append(float(raw_Az))
+        Ax.append((2 * float(raw_Ax))/ 32768.)
+        Ay.append((2 * float(raw_Ay))/ 32768.)
+        Az.append((2 * float(raw_Az))/ 32768.)
     #1565233200000 -> day 8/8/19
     #1565319600000 -> day 9/9/19
     #1565233200000 0h  #1565236800000 1h  #1565240400000  2h   #1565244000000 3h  #1565247600000 4h  #1565251200000 5h 
@@ -29,5 +29,6 @@ if __name__ == "__main__":
         plt.plot([(ts[i]-threshold_min)/60000 for i in index], [Ay[i] for i in index], label='Ay')
         plt.plot([(ts[i]-threshold_min)/60000 for i in index], [Az[i] for i in index], label='Az')
         plt.title('{}h:{}h'.format(n, n+1))
+        plt.ylim(-2, 2)
         plt.legend()
         plt.show()
