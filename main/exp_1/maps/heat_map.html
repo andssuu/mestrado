@@ -140,14 +140,14 @@
       }
 
       function getPoints(t_min, t_max) {
-        data = chuviscada
-        markers = []
+        var data = chuviscada
+        var markers = []
         threshold_min = 1565233200000 + (3600000 * t_min)
         threshold_max = 1565233200000 + (3600000 * t_max)
         for (n in data) {
           var ts = parseInt(data[n].ts)
           if (ts >threshold_min &&  ts <threshold_max){
-            markers[n] = new google.maps.LatLng(data[n].lat, data[n].lng)
+            markers.push(new google.maps.LatLng(data[n].lat, data[n].lng))
           }
         };
         return markers;
