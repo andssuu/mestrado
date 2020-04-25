@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
     ts, Ax, Ay, Az = [], [], [], []
-    file = open('mestrado/data/exp_3/20191021104433.txt', 'r')
+    file = open('mestrado/data/exp_3/20191021104433-acc.txt', 'r')
     for line in file.readlines():
         raw_ts, raw_Ax, raw_Ay, raw_Az, *_ = line.strip().split(';')
         ts.append(int(raw_ts))
@@ -12,35 +12,28 @@ if __name__ == "__main__":
         Ay.append((2 * float(raw_Ay))/ 32768.)
         Az.append((2 * float(raw_Az))/ 32768.)
     #1571666400000 -> day 21/10/19 11h 00m 00s
-    #1571713200000 -> day 22/10/19
-    #1571666400000 11h #1571670000000 12h #1571673600000 13h #1571677200000 14h  
-    #1571680800000 15h #1571684400000 16h #1571688000000 17h #1571691600000 18h
-    #1571695200000 19h #1571698800000 20h #1571702400000 21h #1571706000000 22h
-    #1571709600000 23h
-    #1571713200000 24h
-    thresholds = [0,0,0,0,0,0,0,0,0,0,0,1571666400000, 1571670000000, 1571673600000, 1571677200000, 1571680800000,
-    1571684400000, 1571688000000, 1571691600000, 1571695200000, 1571698800000, 1571702400000, 1571706000000,
-    1571709600000, 1571713200000]
+    threshold = 1571666400000
     fig, axs = plt.subplots(nrows=8, ncols=3)
     for n in range(11, 24, 1):
-        plot = [(0, 0), (0, 1), (0, 2),
-                (1, 0), (1, 1), (1, 2),
-                (2, 0), (2, 1), (2, 2),
-                (3, 0), (3, 1), (3, 2),
-                (4, 0), (4, 1), (4, 2),
-                (5, 0), (5, 1), (5, 2),
-                (6, 0), (6, 1), (6, 2),
-                (7, 0), (7, 1), (7, 2),
+        graphics = [
+            (0, 0), (0, 1), (0, 2),
+            (1, 0), (1, 1), (1, 2),
+            (2, 0), (2, 1), (2, 2),
+            (3, 0), (3, 1), (3, 2),
+            (4, 0), (4, 1), (4, 2),
+            (5, 0), (5, 1), (5, 2),
+            (6, 0), (6, 1), (6, 2),
+            (7, 0), (7, 1), (7, 2)
         ]
-        x_plot, y_plot = plot[n]
-        threshold_min, threshold_max = thresholds[n], thresholds[n+1]
+        i_graphic, j_graphic = graphics[n]
+        threshold_min, threshold_max = threshold, threshold+3600000
+        threshold = threshold_max
         index = [i for i, x in enumerate(ts) if x >= threshold_min and x < threshold_max ]      
-        axs[x_plot, y_plot].plot([(ts[i]-threshold_min)/60000 for i in index], [Ax[i] for i in index], label='Ax')
-        axs[x_plot, y_plot].plot([(ts[i]-threshold_min)/60000 for i in index], [Ay[i] for i in index], label='Ay')
-        axs[x_plot, y_plot].plot([(ts[i]-threshold_min)/60000 for i in index], [Az[i] for i in index], label='Az')
-        axs[x_plot, y_plot].set_ylim([-2, 2])
-        axs[x_plot, y_plot].set_title('{}h:{}h'.format(n, n+1))
-    for ax in axs.flat:
-        ax.label_outer()
-    plt.legend()
+        axs[i_graphic, j_graphic].plot([(ts[i]-threshold_min)/60000 for i in index], [Ax[i] for i in index], label='Ax')
+        axs[i_graphic, j_graphic].plot([(ts[i]-threshold_min)/60000 for i in index], [Ay[i] for i in index], label='Ay')
+        axs[i_graphic, j_graphic].plot([(ts[i]-threshold_min)/60000 for i in index], [Az[i] for i in index], label='Az')
+        axs[i_graphic, j_graphic].set_ylim([-2, 2])
+        axs[i_graphic, j_graphic].set_title('{}h:{}h'.format(n, n+1))
+    #plt.legend(loc="best")
+    #plt.savefig('mestrado/figures/exp3/accelerometer/exp3_acc_all.png')
     plt.show()
