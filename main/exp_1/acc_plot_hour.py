@@ -3,7 +3,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
-    ts, Ax, Ay, Az = [],[],[],[]
+    ts, Ax, Ay, Az = [], [], [], []
     file = open('mestrado/data/exp_1/20190807124800-acc.txt', 'r')
     for line in file.readlines():
         raw_ts, raw_Ax, raw_Ay, raw_Az, *_  = line.strip().split(';')
@@ -23,5 +23,5 @@ if __name__ == "__main__":
         plt.title('{}h:{}h'.format(n, n+1))
         plt.ylim(-2, 2)
         plt.legend()
-        plt.savefig('mestrado/figures/exp1/accelerometer/exp1_acc_{}-{}.png'.format(n, n+1))
+        #plt.savefig('mestrado/figures/exp1/accelerometer/exp1_acc_{}-{}.png'.format(n, n+1))
         plt.show()
