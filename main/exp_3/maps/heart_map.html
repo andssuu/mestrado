@@ -41,38 +41,42 @@
   </head>
 
   <body>
-    <!-- <div id="floating-panel">
+    <div id="floating-panel">
       <button onclick="toggleHeatmap()">Toggle Heatmap</button>
       <button onclick="changeGradient()">Change gradient</button>
       <button onclick="changeRadius()">Change radius</button>
       <button onclick="changeOpacity()">Change opacity</button>
       <br>
-      <button onclick="changeHeatmap(0)">Vaca 1</button>
-      <button onclick="changeHeatmap(1)">Vaca 2</button>
-      <button onclick="changeHeatmap(2)">Vaca 3</button>
-      <button onclick="changeHeatmap(3)">Vaca 4</button>
-
-    </div> -->
+      <button onclick="changeHeatmap(11, 24)">11-24</button>
+      <button onclick="changeHeatmap(11, 12)">11-12</button>
+      <button onclick="changeHeatmap(12, 13)">12-13</button>
+      <button onclick="changeHeatmap(13, 14)">13-14</button>
+      <button onclick="changeHeatmap(14, 15)">14-15</button>
+      <button onclick="changeHeatmap(15, 16)">15-16</button>
+      <button onclick="changeHeatmap(16, 17)">16-17</button>
+      <button onclick="changeHeatmap(17, 18)">17-18</button>
+      <button onclick="changeHeatmap(18, 19)">18-19</button>
+      <button onclick="changeHeatmap(19, 20)">19-20</button>
+      <button onclick="changeHeatmap(20, 21)">20-21</button>
+      <button onclick="changeHeatmap(21, 22)">21-22</button>
+      <button onclick="changeHeatmap(22, 23)">22-23</button>
+      <button onclick="changeHeatmap(23, 24)">23-24</button>
+    </div>
     <div id="map"></div>
-    <!-- <script type="text/javascript" src="../../../data/exp_3/cow_1.json"></script>
-    <script type="text/javascript" src="../../../data/exp_3/cow_2.json"></script>
-    <script type="text/javascript" src="../../../data/exp_3/cow_3.json"></script> -->
-    <script type="text/javascript" src="../../../data/exp_3/cow_4.json"></script>
-
+    <script type="text/javascript" src="../../../data/exp_3/chuviscada.json"></script>
  <script>
       // This example requires the Visualization library. Include the libraries=visualization
       // parameter when you first load the API. For example:
       // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=visualization">
       var map, heatmap;
         function initMap() {
-          cows = [cow_4]
           map = new google.maps.Map(document.getElementById('map'), {
             zoom: 18,
             center: {lat: -8.975696, lng: -36.454287},
             mapTypeId: 'satellite'
           });
           heatmap = new google.maps.visualization.HeatmapLayer({
-            data: getPoints(0),
+            data: getPoints(11, 24),
             map: map
           });
       }
@@ -109,23 +113,29 @@
         heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
       }
 
-      function changeHeatmap(n_cow) {
+      function changeHeatmap(t_min, t_max) {
         map = new google.maps.Map(document.getElementById('map'), {
             zoom: 18,
             center: {lat: -8.975696, lng: -36.454287},
             mapTypeId: 'satellite'
           });
           heatmap = new google.maps.visualization.HeatmapLayer({
-            data: getPoints(n_cow),
+            data: getPoints(t_min, t_max),
             map: map
           });
       }
 
-      function getPoints(n_cow) {
-        data = cows[n_cow]
-        markers = []
+      function getPoints(t_min, t_max) {
+        var data = chuviscada
+        var markers = []
+        // 1571626800 day 21/10/19
+        threshold_min = 1571626800000 + (3600000 * t_min)
+        threshold_max = 1571626800000 + (3600000 * t_max)
         for (n in data) {
-          markers[n] = new google.maps.LatLng(data[n].lat, data[n].lng)
+          var ts = parseInt(data[n].ts)
+          if (ts >threshold_min &&  ts <threshold_max){
+            markers.push(new google.maps.LatLng(data[n].lat, data[n].lng))
+          }
         };
         return markers;
       }
