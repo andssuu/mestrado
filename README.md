@@ -10,7 +10,10 @@ Repositório dedicado para o desenvolvimento das atividades do mestrado em Infor
 - branquinha
   - sensores
     - conjunto de arquivos .txt do gps (ts-gps.txt) e acelerômetro (ts-acc.txt). O arquivos unified são a concatenação de todos os dados coletados em múltiplo arquivos .txt
-
+    - Formato dos dados nos arquivos:
+    ```
+      time_stamp; acc_x; acc_y; acc_z; temperature; gyroscope_x; gyroscope_y; gyroscope_z
+    ```
 - Hobo: dados dos dois medidores de temperatura e umidade instalados no pasto (sombra e pasto)
 
 - Mimosa: dados semelhantes aos de branquinha
