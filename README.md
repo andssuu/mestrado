@@ -27,15 +27,15 @@ Repositório dedicado para o desenvolvimento das atividades do mestrado em Infor
 
 - Comportamento 08-08-19: dados de comportamento coletados manualmente a cada 10 minutos durante um dia por Pedro no experimento
 
-- **unified-gps-01.txt (dados de gps unificados de branquinha)**
+- _unified-gps-01.txt_: dados de gps unificados de branquinha
 
-- **unified-gps-02.txt (dados de gps unificados de mimosa)**
+- _unified-gps-02.txt_: dados de gps unificados de mimosa
 
-- **unified-gps-03.txt (dados de gps unificados de pretinha)**
+- _unified-gps-03.txt_: dados de gps unificados de pretinha
 
-- **unified-gps-04.txt (dados de gps unificados de chuviscada)**
+- _unified-gps-04.txt_: dados de gps unificados de chuviscada
 
-- **unified-gps.txt (dados de gps de todas as vacas)**
+- _unified-gps.txt_: dados de gps de todas as vacas
 
 
 ### experimento-02 
