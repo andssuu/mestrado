@@ -23,5 +23,5 @@ if __name__ == "__main__":
         axs[1].plot([(ts[i]-threshold_min)/60000 for i in index], [lng[i] for i in index], label='Lng', color='red')
         #axs[1].set_title('LNG - {}h:{}h'.format(n, n+1))
         axs[1].legend()
-        #plt.savefig('mestrado/figures/exp1/accelerometer/exp1_gps_{}-{}.png'.format(n, n+1))
+        #plt.savefig('mestrado/figures/exp1/gps/exp1_gps_{}-{}.png'.format(n, n+1))
         plt.show()
