@@ -19,7 +19,7 @@
       #floating-panel {
         position: absolute;
         top: 10px;
-        left: 25%;
+        left: 5%;
         z-index: 5;
         background-color: #fff;
         padding: 5px;
@@ -32,7 +32,7 @@
       #floating-panel {
         background-color: #fff;
         border: 1px solid #999;
-        left: 25%;
+        left: 5%;
         padding: 5px;
         position: absolute;
         top: 10px;
@@ -41,55 +41,102 @@
     </style>
   </head>
   <body>
-    <!-- <div id="floating-panel">
-      <button onclick="changeTrackmap(0)">Vaca 1</button>
+    <div id="floating-panel">
+      <!-- <button onclick="changeTrackmap(0)">Vaca 1</button>
       <button onclick="changeTrackmap(1)">Vaca 2</button>
       <button onclick="changeTrackmap(2)">Vaca 3</button>
-      <button onclick="changeTrackmap(3)">Vaca 4</button>
-    </div> -->
+      <button onclick="changeTrackmap(3)">Vaca 4</button> -->
+        <button onclick="toggleHeatmap()">Toggle Heatmap</button>
+        <button onclick="changeGradient()">Change gradient</button>
+        <button onclick="changeRadius()">Change radius</button>
+        <button onclick="changeOpacity()">Change opacity</button>
+        <br>
+        <button onclick="changeTrackmap(0, 24)">0-24</button>
+        <button onclick="changeTrackmap(0, 1)">0-1</button>
+        <button onclick="changeTrackmap(1, 2)">1-2</button>
+        <button onclick="changeTrackmap(2, 3)">2-3</button>
+        <button onclick="changeTrackmap(3, 4)">3-4</button>
+        <button onclick="changeTrackmap(4, 5)">4-5</button>
+        <button onclick="changeTrackmap(5, 6)">5-6</button>
+        <button onclick="changeTrackmap(6, 7)">6-7</button>
+        <button onclick="changeTrackmap(7, 8)">7-8</button>
+        <button onclick="changeTrackmap(8, 9)">8-9</button>
+        <button onclick="changeTrackmap(9, 10)">9-10</button>
+        <button onclick="changeTrackmap(10, 11)">10-11</button>
+        <button onclick="changeTrackmap(11, 12)">11-12</button>
+        <button onclick="changeTrackmap(12, 13)">12-13</button>
+        <button onclick="changeTrackmap(13, 14)">13-14</button>
+        <button onclick="changeTrackmap(14, 15)">14-15</button>
+        <button onclick="changeTrackmap(15, 16)">15-16</button>
+        <button onclick="changeTrackmap(16, 17)">16-17</button>
+        <button onclick="changeTrackmap(17, 18)">17-18</button>
+        <button onclick="changeTrackmap(18, 19)">18-19</button>
+        <button onclick="changeTrackmap(19, 20)">19-20</button>
+        <button onclick="changeTrackmap(20, 21)">20-21</button>
+        <button onclick="changeTrackmap(21, 22)">21-22</button>
+        <button onclick="changeTrackmap(22, 23)">22-23</button>
+        <button onclick="changeTrackmap(23, 24)">23-24</button>
+    </div>
     <div id="map"></div>
     <!-- <script type="text/javascript" src="../../../data/exp_1/cow_1.json"></script>
     <script type="text/javascript" src="../../../data/exp_1/cow_2.json"></script>
     <script type="text/javascript" src="../../../data/exp_1/cow_3.json"></script> -->
-    <script type="text/javascript" src="../../../data/exp_1/cow_4.json"></script>
+    <script type="text/javascript" src="../../../data/exp_1/chuviscada.json"></script>
     <script>
-      cows = [cow_4]
       function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 18,
           center: {lat: -8.975696, lng: -36.454287},
           mapTypeId: 'terrain'
         });
-        var flightPlanCoordinates = getPoints(0);
+        var flightPlanCoordinates = getPoints(0, 24);
         var flightPath = new google.maps.Polyline({
           path: flightPlanCoordinates,
           geodesic: true,
+          icons: [{
+              icon: {path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW},
+              offset: '100%',
+              repeat: '20px'
+          }],
           strokeColor: '#FF0000',
           strokeOpacity: 1.0,
           strokeWeight: 2
         });
         flightPath.setMap(map);
       }
-      function getPoints(n_cow) {
-        data = cows[n_cow]
-        markers = []
+
+      function getPoints(t_min, t_max) {
+        var data = chuviscada
+        var markers = []
+        //1565233200000 -> day 8/8/19 - 0h - UTC-3
+        threshold_min = 1565233200000 + (3600000 * t_min)
+        threshold_max = 1565233200000 + (3600000 * t_max)
         for (n in data) {
-          markers[n] = {lat: parseFloat(data[n].lat), lng: parseFloat(data[n].lng) }
+          var ts = parseInt(data[n].ts)
+          if (ts >threshold_min &&  ts <threshold_max){
+            markers.push(new google.maps.LatLng(data[n].lat, data[n].lng))
+          }
         };
         return markers;
       }
-      function changeTrackmap(n_cow) {
+
+      function changeTrackmap(t_min, t_max) {
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 18,
           center: {lat: -8.975696, lng: -36.454287},
           mapTypeId: 'terrain'
         });
-        var flightPlanCoordinates = getPoints(n_cow);
+        var flightPlanCoordinates = getPoints(t_min, t_max);
         var flightPath = new google.maps.Polyline({
           path: flightPlanCoordinates,
           geodesic: true,
           strokeColor: '#FF0000',
           strokeOpacity: 1.0,
+          icons: [{
+              icon: {path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW},
+              offset: '100%',
+              repeat: '20px'
+          }],
           strokeWeight: 2
         });
         flightPath.setMap(map);
