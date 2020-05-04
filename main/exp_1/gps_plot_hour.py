@@ -10,7 +10,7 @@ if __name__ == "__main__":
         ts.append(float(raw_ts))
         lat.append(float(raw_lat))
         lng.append(float(raw_lng))
-    #1565233200000 -> day 8/8/19
+    #1565233200000 -> day 8/8/19 - 0h - UTC-3
     threshold = 1565233200000
     for n in range(24):
         fig, axs = plt.subplots(nrows=2, ncols=1)

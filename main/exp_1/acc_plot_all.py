@@ -11,7 +11,7 @@ if __name__ == "__main__":
         Ax.append((2 * float(raw_Ax))/ 32768.)
         Ay.append((2 * float(raw_Ay))/ 32768.)
         Az.append((2 * float(raw_Az))/ 32768.)
-    #1565233200000 -> day 8/8/19
+    #1565233200000 -> day 8/8/19 - 0h - UTC-3
     threshold = 1565233200000
     fig, axs = plt.subplots(nrows=8, ncols=3)
     for n in range(24):
