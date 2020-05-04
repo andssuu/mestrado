@@ -1,10 +1,12 @@
 from datetime import datetime
+from datetime import timezone
+
 
 if __name__ == "__main__":
     date = '20190807124800'
     path_file = 'mestrado/data/dados-jua-ams/experimento-01/sd-02-chuviscada/sensores/{}-acc.txt'.format(date)
     file = open(path_file, 'r')
-    dt_obj = datetime.strptime('{}.{}.{} {}:{}:{},00'.format(date[6:8], date[4:6], date[0:4], date[8:10], date[10:12], date[12:14]), '%d.%m.%Y %H:%M:%S,%f')
+    dt_obj = datetime.strptime('{}.{}.{} {}:{}:{},00'.format(date[6:8], date[4:6], date[0:4], date[8:10], date[10:12], date[12:14]), '%d.%m.%Y %H:%M:%S,%f').replace(tzinfo=timezone.utc)
     time_stamp = int(dt_obj.timestamp() * 1000)
     with open('mestrado/data/exp_1/{}-acc.txt'.format(date), 'w') as f:
         for line in file.readlines():
@@ -14,7 +16,7 @@ if __name__ == "__main__":
         f.close()
     path_file = 'mestrado/data/dados-jua-ams/experimento-01/sd-02-chuviscada/sensores/{}-gps.txt'.format(date)
     file = open(path_file, 'r')
-    dt_obj = datetime.strptime('{}.{}.{} {}:{}:{},00'.format(date[6:8], date[4:6], date[0:4], date[8:10], date[10:12], date[12:14]), '%d.%m.%Y %H:%M:%S,%f')
+    dt_obj = datetime.strptime('{}.{}.{} {}:{}:{},00'.format(date[6:8], date[4:6], date[0:4], int(date[8:10])-3, date[10:12], date[12:14]), '%d.%m.%Y %H:%M:%S,%f').replace(tzinfo=timezone.utc)
     time_stamp = int(dt_obj.timestamp() * 1000)
     with open('mestrado/data/exp_1/{}-gps.txt'.format(date), 'w') as f:
         for line in file.readlines():
