@@ -37,12 +37,27 @@ Repositório dedicado para o desenvolvimento das atividades do mestrado em Infor
 
 - _unified-gps.txt_: dados de gps de todas as vacas
 
+* * *
 
 ### experimento-02 
 - O segundo experimento possui estrutura semelhante só uma mudança de animal que para nós a priori é indiferente. saiu pretinha e entrou furtacor)
 
+* * *
+
 ### experimento-03
 - O terceiro experimento possui estrutura semelhante no entanto voltou pretinha e saiu furtacor
 
+* * *
+
 ### Fotos (fotos do experimento)
+
+* * *
+
+### Observações
+
+1. Todas as datas e horários estão em UTC, incluindo os nomes dos próprios arquivos.
+
+
+
+
 
