@@ -3,6 +3,18 @@
 Repositório dedicado para o desenvolvimento das atividades do mestrado em Informática Aplicada na UFRPE.
 
 
+### Principais atividades
+
+  - **Andando:** Caminhando sem apreensão de forragem.
+  
+  - **Bebendo:** Acesso ao bebedouro e consumo de água.
+  
+  - **Comendo:** Apreensão de forragem durante o pastejo.
+  
+  - **Ruminando:** Regurgitação, mastigação e deglutição.
+  
+  - **Ócio:** Em pé ou deitada, sem realizar nenhuma das atividades anteriores.
+
 ## Estrutura da Base de Dados
 
 ### experimento-01
