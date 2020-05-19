@@ -57,7 +57,6 @@ Repositório dedicado para o desenvolvimento das atividades do mestrado em Infor
 
   ### Posição Geográfica (GPS)
   - *Heat Map*: Mapa de calor da posição do animal.
-    ![alt text](http://url/to/img.png)
     ![Screenshot from 2020-05-19 08-54-40](https://user-images.githubusercontent.com/6972758/82323462-771d7580-99ae-11ea-81df-14364c0fa8b0.png)
 
   - *Track Map:* Mapa com a posição e direção do animal.
