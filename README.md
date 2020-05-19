@@ -71,11 +71,13 @@ Repositório dedicado para o desenvolvimento das atividades do mestrado em Infor
 
   ### Giroscópio (TODO)
 
-  ### Temperatura
+  ### Temperatura (TODO)
 
-## Arquitetura
+## Arquitetura (TODO)
 
   ### Pré-processamento
+  
+  
 
   ### Extração de Características
 
