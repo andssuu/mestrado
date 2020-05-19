@@ -56,10 +56,21 @@ Repositório dedicado para o desenvolvimento das atividades do mestrado em Infor
 ## Visualização dos Dados
 
   ### Posição Geográfica (GPS)
+  - *Heat Map*: Mapa de calor da posição do animal.
+    ![alt text](http://url/to/img.png)
+    ![Screenshot from 2020-05-19 08-54-40](https://user-images.githubusercontent.com/6972758/82323462-771d7580-99ae-11ea-81df-14364c0fa8b0.png)
+
+  - *Track Map:* Mapa com a posição e direção do animal.
+  ![Screenshot from 2020-05-19 08-56-08](https://user-images.githubusercontent.com/6972758/82323577-a46a2380-99ae-11ea-9fc1-de77ac8d7a32.png)
 
   ### Acelerômetro
+  - ```acc_plot_all.py```: plota os valores das 3 coordenada de um dia em intervalos de 1h.
+    ![08/08/2019](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/exp1_acc_all.png)
+  - ```acc_plot_hour.py```: plota os valores das 3 coordenadas em intervalos de 1h. 
+    ![08/08/2019:13:14](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/exp1_acc_13-14.png)
+    ![08/08/2019:19:20](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/exp1_acc_19-20.png)
 
-  ### Giroscópio
+  ### Giroscópio (TODO)
 
   ### Temperatura
 
