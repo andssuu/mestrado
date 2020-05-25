@@ -24,4 +24,6 @@ if __name__ == "__main__":
         plt.title('08/08/19 {}h:{}m:{}m'.format(hour, n, n+1))
         plt.ylim(-2, 2)
         plt.legend()
+        #plt.savefig('mestrado/figures/exp1/accelerometer/0h/exp1_acc_min_{}-{}.png'.format(n, n+1))
+        #plt.close()
         plt.show()
