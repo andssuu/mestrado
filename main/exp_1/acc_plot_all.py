@@ -28,7 +28,7 @@ if __name__ == "__main__":
         i_graphic, j_graphic = graphics[n]
         threshold_min, threshold_max = threshold, threshold+3600000
         threshold = threshold_max
-        index = [i for i, x in enumerate(ts) if x >= threshold_min and x < threshold_max ]      
+        index = [i for i, x in enumerate(ts) if x >= threshold_min and x < threshold_max ]
         axs[i_graphic, j_graphic].plot([(ts[i]-threshold_min)/60000 for i in index], [Ax[i] for i in index], label='Ax')
         axs[i_graphic, j_graphic].plot([(ts[i]-threshold_min)/60000 for i in index], [Ay[i] for i in index], label='Ay')
         axs[i_graphic, j_graphic].plot([(ts[i]-threshold_min)/60000 for i in index], [Az[i] for i in index], label='Az')
