@@ -36,3 +36,16 @@ if __name__ == "__main__":
             if distance > 3: print('{}h-{}m-{}m: andou {:.2f} metros'.format(n, i , i+1, distance))
             else: print('{}h-{}m-{}m: ócio'.format(n, i , i+1))
         print('Distância Total ({}-{}): {:.2f} metros'.format(n, n+1, d_total))
+    # 10 minutes
+    # for n in range(24):
+    #     #fig, axs = plt.subplots(nrows=2, ncols=1)
+    #     threshold_min, threshold_max = threshold, threshold+3600000
+    #     threshold = threshold_max
+    #     index = [i for i, x in enumerate(ts) if x >= threshold_min and x < threshold_max ]
+    #     d_total=0
+    #     for i in range(0, len(index), 10):
+    #         distance = get_distance(lat[index[i]], lng[index[i]], lat[index[i+1]], lng[index[i+1]])*1000
+    #         d_total += distance
+    #         if distance > 3: print('{}h-{}m-{}m: andou {:.2f} metros'.format(n, i , i+1, distance))
+    #         else: print('{}h-{}m-{}m: ócio'.format(n, i , i+10))
+    #     print('Distância Total ({}-{}): {:.2f} metros'.format(n, n+1, d_total))
