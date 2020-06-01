@@ -1,19 +1,21 @@
+import math
 from datetime import datetime
 
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
-    ts, Ax, Ay, Az = [],[],[],[]
+    ts, ax, ay, az, resultant = [], [], [], [], []
     file = open('mestrado/data/exp_1/20190807124800-acc.txt', 'r')
     for line in file.readlines():
-        raw_ts, raw_Ax, raw_Ay, raw_Az, *_  = line.strip().split(';')
+        raw_ts, raw_ax, raw_ay, raw_az, *_  = line.strip().split(';')
         ts.append(int(raw_ts))
-        Ax.append((2 * float(raw_Ax))/ 32768.)
-        Ay.append((2 * float(raw_Ay))/ 32768.)
-        Az.append((2 * float(raw_Az))/ 32768.)
+        ax.append((2*float(raw_ax))/ 32768.)
+        ay.append((2*float(raw_ay))/ 32768.)
+        az.append((2*float(raw_az))/ 32768.)
+        resultant.append(math.sqrt(pow(ax[-1], 2) + pow(ay[-1], 2) + pow(az[-1], 2)))
     #1565233200000 -> day 8/8/19 - 0h - UTC-3
     threshold = 1565233200000
-    fig, axs = plt.subplots(nrows=8, ncols=3)
+    fig, graph = plt.subplots(nrows=8, ncols=3)
     for n in range(24):
         graphics = [
             (0, 0), (0, 1), (0, 2),
@@ -29,10 +31,11 @@ if __name__ == "__main__":
         threshold_min, threshold_max = threshold, threshold+3600000
         threshold = threshold_max
         index = [i for i, x in enumerate(ts) if x >= threshold_min and x < threshold_max ]
-        axs[i_graphic, j_graphic].plot([(ts[i]-threshold_min)/60000 for i in index], [Ax[i] for i in index], label='Ax')
-        axs[i_graphic, j_graphic].plot([(ts[i]-threshold_min)/60000 for i in index], [Ay[i] for i in index], label='Ay')
-        axs[i_graphic, j_graphic].plot([(ts[i]-threshold_min)/60000 for i in index], [Az[i] for i in index], label='Az')
-        axs[i_graphic, j_graphic].set_ylim([-2, 2])
-        axs[i_graphic, j_graphic].set_title('{}h:{}h'.format(n, n+1))
+        graph[i_graphic, j_graphic].plot([(ts[i]-threshold_min)/60000 for i in index], [ax[i] for i in index], label='X')
+        graph[i_graphic, j_graphic].plot([(ts[i]-threshold_min)/60000 for i in index], [ay[i] for i in index], label='Y')
+        graph[i_graphic, j_graphic].plot([(ts[i]-threshold_min)/60000 for i in index], [az[i] for i in index], label='Z')
+        graph[i_graphic, j_graphic].plot([(ts[i]-threshold_min)/60000 for i in index], [resultant[i] for i in index], label='R')
+        graph[i_graphic, j_graphic].set_ylim([-2, 2])
+        graph[i_graphic, j_graphic].set_title('08/08/19 {}h:{}h'.format(n, n+1))
     #plt.legend(loc="best")
     plt.show()
