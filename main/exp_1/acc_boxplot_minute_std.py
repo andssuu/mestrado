@@ -1,14 +1,9 @@
 import math
 import statistics
-import numpy as np
 from datetime import datetime
 
 import matplotlib.pyplot as plt
-## numpy is used for creating fake data
-import numpy as np 
-import matplotlib as mpl 
-
-import matplotlib.pyplot as plt 
+import numpy as np
 
 if __name__ == "__main__":
     ts, ax, ay, az = [], [], [], []
@@ -40,10 +35,10 @@ if __name__ == "__main__":
             _y_std = np.std(_y)
             _z_std = np.std(_z)
             labels = ['Acc X', 'Acc Y', 'Acc Z']
-            x_pos = np.arange(len(labels))
-            CTEs = [_x_mean, _y_mean, _z_mean]
-            error = [_x_std, _y_std, _z_std]
-            # fig, graph = plt.subplots()
+            # x_pos = np.arange(len(labels))
+            # CTEs = [_x_mean, _y_mean, _z_mean]
+            # error = [_x_std, _y_std, _z_std]
+            # # fig, graph = plt.subplots()
             # graph.bar(x_pos, CTEs , yerr=error, align='center', alpha=0.5, ecolor='black', capsize=10)
             # graph.set_ylabel('Standard Deviation (g)')
             # graph.set_xticks(x_pos)
@@ -58,4 +53,5 @@ if __name__ == "__main__":
             graph.set_xticklabels(labels)
             graph.set_title('08/08/19 {}m {}s {}s'.format(n, int(j/10), int(j/10)+10))
             bp = graph.boxplot([_x, _y, _z])
+            plt.ylabel('Acc (g)')
             plt.show()
