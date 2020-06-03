@@ -28,4 +28,6 @@ if __name__ == "__main__":
         graph.set_xlim3d(-2, 2)
         graph.set_ylim3d(-2, 2)
         graph.set_zlim3d(-2, 2)
+        #plt.savefig('mestrado/figures/exp1/accelerometer/3D/{}h/exp1_acc_min_{}-{}_3d.png'.format(hour, n, n+1))
+        #plt.close()
         plt.show()

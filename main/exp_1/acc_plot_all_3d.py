@@ -26,4 +26,6 @@ if __name__ == "__main__":
         graph.set_zlabel('Z')
         plt.ylim(-2, 2)
     plt.title('08/08/19')
+    #plt.savefig('mestrado/figures/exp1/accelerometer/3D/exp1_acc_all_3d.png')
+    #plt.close()
     plt.show()
