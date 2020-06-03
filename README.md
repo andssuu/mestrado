@@ -63,11 +63,35 @@ Repositório dedicado para o desenvolvimento das atividades do mestrado em Infor
   ![Screenshot from 2020-05-19 08-56-08](https://user-images.githubusercontent.com/6972758/82323577-a46a2380-99ae-11ea-9fc1-de77ac8d7a32.png)
 
   ### Acelerômetro
-  - ```acc_plot_all.py```: plota os valores das 3 coordenada de um dia em intervalos de 1h.
+  - ```acc_plot_all.py```: plota os valores das 3 coordenada de um dia em intervalos de 1 hora.
     ![08/08/2019](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/exp1_acc_all.png)
-  - ```acc_plot_hour.py```: plota os valores das 3 coordenadas em intervalos de 1h. 
+
+  - ```acc_plot_hour.py```: plota os valores das 3 coordenadas em intervalos de 1 hora.
     ![08/08/2019:13:14](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/exp1_acc_13-14.png)
     ![08/08/2019:19:20](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/exp1_acc_19-20.png)
+
+  - ```acc_plot_minute.py```: plota os valores das 3 coordenadas durante uma determinada hora em intervalos de 1 minuto.
+    ![](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/0h/exp1_acc_min_0-1.png)
+
+  - ```acc_plot_all_3d.py```: plota em 3D os valores das 3 coordenada de um dia em intervalos de 1 hora.
+
+
+  - ```acc_plot_hour_3d.py```:  plota em 3D os valores das 3 coordenadas em intervalos de 1 hora.
+
+
+  - ```acc_plot_minute_3d.py```: plota em 3D os valores das 3 coordenadas durante uma determinada hora em intervalos de 1 minuto.
+
+
+  - ```acc_plot_minute_power.py```: plota os distribuição do spectro das 3 coordenadas durante uma determinada hora em intervalos de 1 minuto.
+
+
+  - ```acc_plot_minute_distribution.py```: plota os distribuição do spectro das 3 coordenadas durante uma determinada hora em intervalos de 1 minuto.
+
+
+  - ```acc_plot_minute_std.py```: gráfico de barras exibindo os valores dos desvios-padrão das 3 coordenadas da aceleração em intervalos de 1 minuto dentro de 1 hora.
+
+  - ```acc_boxplot_minute_std.py```: gráfico do tipo boxoplot com os valores dos desvios-padrão das 3 coordenadas da aceleração em intervalos de 1 minuto dentro de 1 hora.  
+
 
   ### Giroscópio (TODO)
 
