@@ -68,7 +68,6 @@ Repositório dedicado para o desenvolvimento das atividades do mestrado em Infor
 
   - ```acc_plot_hour.py```: plota os valores das 3 coordenadas em intervalos de 1 hora.
     ![08/08/2019:13:14](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/exp1_acc_13-14.png)
-    ![08/08/2019:19:20](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/exp1_acc_19-20.png)
 
   - ```acc_plot_minute.py```: plota os valores das 3 coordenadas durante uma determinada hora em intervalos de 1 minuto.
     ![](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/0h/exp1_acc_min_0-1.png)
@@ -89,15 +88,14 @@ Repositório dedicado para o desenvolvimento das atividades do mestrado em Infor
 
   - ```acc_plot_minute_distribution.py```: plota os distribuição do spectro das 3 coordenadas durante uma determinada hora em intervalos de 1 minuto.
 
+  ![](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/0h/distributions/exp1_acc_dist_55-56.png)
 
   - ```acc_plot_minute_std.py```: gráfico de barras exibindo os valores dos desvios-padrão das 3 coordenadas da aceleração 
   em intervalos de 1 minuto dentro de 1 hora.
-  
+
   ![](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/0h/std/exp1_acc_std_6-7.png)
 
-
   - ```acc_boxplot_minute_std.py```: gráfico do tipo boxoplot com os valores dos desvios-padrão das 3 coordenadas da aceleração em intervalos de 1 minuto dentro de 1 hora.
-
 
   ### Giroscópio (TODO)
 
