@@ -79,7 +79,9 @@ Repositório dedicado para o desenvolvimento das atividades do mestrado em Infor
   - ```acc_plot_hour_3d.py```:  plota em 3D os valores das 3 coordenadas em intervalos de 1 hora.
     ![](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/3D/exp1_acc_0-1_3d.png)
 
-  - ```acc_plot_minute_3d.py```: plota em 3D os valores das 3 coordenadas durante uma determinada hora em intervalos de 1 minuto.
+  - ```acc_plot_minute_3d.py```: plota em 3D os valores das 3 coordenadas durante uma determinada hora em intervalos 
+  de 1 minuto.
+  
   ![](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/3D/0h/exp1_acc_min_0-1_3d.png)
 
   - ```acc_plot_minute_power.py```: plota os distribuição do spectro das 3 coordenadas durante uma determinada hora em intervalos de 1 minuto.
