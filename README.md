@@ -96,7 +96,10 @@ Repositório dedicado para o desenvolvimento das atividades do mestrado em Infor
 
   ![](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/0h/std/exp1_acc_std_6-7.png)
 
-  - ```acc_boxplot_minute_std.py```: gráfico do tipo boxoplot com os valores dos desvios-padrão das 3 coordenadas da aceleração em intervalos de 1 minuto dentro de 1 hora.
+  - ```acc_boxplot_minute_std.py```: gráfico do tipo boxoplot com os valores dos desvios-padrão das 3 coordenadas da 
+  aceleração em intervalos de 1 minuto dentro de 1 hora.
+
+  ![](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/0h/boxplot/exp1_acc_bp_6-7.png)
 
   ### Giroscópio (TODO)
 
