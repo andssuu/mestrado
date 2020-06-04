@@ -18,7 +18,7 @@ if __name__ == "__main__":
         az.append((2*float(raw_az))/ 32768.)
         resultant.append(math.sqrt(pow(ax[-1], 2) + pow(ay[-1], 2) + pow(az[-1], 2)))
     #1565233200000 -> day 8/8/19
-    hour = 16
+    hour = 0
     threshold = 1565233200000 + (3600000 * hour)
     for n in range(60):
         threshold_min, threshold_max = threshold, threshold+60000
@@ -54,6 +54,9 @@ if __name__ == "__main__":
             graph[i_graphic, j_graphic].plot(np.arange(-2, 2, 0.05), r_counter, marker='P', label="R")
             ticks = np.arange(-2, 2.1, 0.5)
             graph[i_graphic, j_graphic].set_xticks(ticks)
-            graph[i_graphic, j_graphic].set_title('{}h {}m {}s:{}s'.format(hour, n, t*10, t*10+10))
+            #graph[i_graphic, j_graphic].set_title('{}h {}m {}s:{}s'.format(hour, n, t*10, t*10+10))
         plt.legend(loc="best")
+        graph[0, 1].set_title('{}h {}m: {}m'.format(hour, n, n+1))
+        #plt.savefig('mestrado/figures/exp1/accelerometer/{}h/distributions/exp1_acc_dist_{}-{}.png'.format(hour, n, n+1))
+        #plt.close()
         plt.show()
