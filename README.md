@@ -68,7 +68,6 @@ Repositório dedicado para o desenvolvimento das atividades do mestrado em Infor
 
   - ```acc_plot_hour.py```: plota os valores das 3 coordenadas em intervalos de 1 hora.
     ![08/08/2019:13:14](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/exp1_acc_13-14.png)
-    ![08/08/2019:19:20](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/exp1_acc_19-20.png)
 
   - ```acc_plot_minute.py```: plota os valores das 3 coordenadas durante uma determinada hora em intervalos de 1 minuto.
     ![](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/0h/exp1_acc_min_0-1.png)
