@@ -84,7 +84,8 @@ Repositório dedicado para o desenvolvimento das atividades do mestrado em Infor
   ![](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/3D/0h/exp1_acc_min_0-1_3d.png)
 
   - ```acc_plot_minute_power.py```: plota os distribuição do spectro das 3 coordenadas durante uma determinada hora em intervalos de 1 minuto.
-  
+
+  ![](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/0h/power/exp1_acc_fft_13-14.png)
 
   - ```acc_plot_minute_distribution.py```: plota os distribuição do spectro das 3 coordenadas durante uma determinada hora em intervalos de 1 minuto.
 
@@ -104,12 +105,13 @@ Repositório dedicado para o desenvolvimento das atividades do mestrado em Infor
 ## Arquitetura (TODO)
 
   ### Pré-processamento
+ 
   
-  
-
   ### Extração de Características
 
+
   ### Classificação
+
 
   #### Principais atividades na determinação do comportamento
 
