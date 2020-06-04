@@ -38,7 +38,7 @@ if __name__ == "__main__":
             # x_pos = np.arange(len(labels))
             # CTEs = [_x_mean, _y_mean, _z_mean]
             # error = [_x_std, _y_std, _z_std]
-            # # fig, graph = plt.subplots()
+            # fig, graph = plt.subplots()
             # graph.bar(x_pos, CTEs , yerr=error, align='center', alpha=0.5, ecolor='black', capsize=10)
             # graph.set_ylabel('Standard Deviation (g)')
             # graph.set_xticks(x_pos)

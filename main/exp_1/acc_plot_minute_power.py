@@ -39,4 +39,6 @@ if __name__ == "__main__":
         plt.xlabel('Frequency')
         plt.ylabel('Power')
         plt.tight_layout()
+        #plt.savefig('mestrado/figures/exp1/accelerometer/{}h/power/exp1_acc_fft_{}-{}.png'.format(hour, n, n+1))
+        #plt.close()
         plt.show()
