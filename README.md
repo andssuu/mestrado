@@ -74,23 +74,29 @@ Repositório dedicado para o desenvolvimento das atividades do mestrado em Infor
     ![](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/0h/exp1_acc_min_0-1.png)
 
   - ```acc_plot_all_3d.py```: plota em 3D os valores das 3 coordenada de um dia em intervalos de 1 hora.
-
+    ![](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/3D/exp1_acc_all_3d.png)
 
   - ```acc_plot_hour_3d.py```:  plota em 3D os valores das 3 coordenadas em intervalos de 1 hora.
+    ![](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/3D/exp1_acc_0-1_3d.png)
 
-
-  - ```acc_plot_minute_3d.py```: plota em 3D os valores das 3 coordenadas durante uma determinada hora em intervalos de 1 minuto.
-
+  - ```acc_plot_minute_3d.py```: plota em 3D os valores das 3 coordenadas durante uma determinada hora em intervalos 
+  de 1 minuto.
+  
+  ![](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/3D/0h/exp1_acc_min_0-1_3d.png)
 
   - ```acc_plot_minute_power.py```: plota os distribuição do spectro das 3 coordenadas durante uma determinada hora em intervalos de 1 minuto.
-
+  
 
   - ```acc_plot_minute_distribution.py```: plota os distribuição do spectro das 3 coordenadas durante uma determinada hora em intervalos de 1 minuto.
 
 
-  - ```acc_plot_minute_std.py```: gráfico de barras exibindo os valores dos desvios-padrão das 3 coordenadas da aceleração em intervalos de 1 minuto dentro de 1 hora.
+  - ```acc_plot_minute_std.py```: gráfico de barras exibindo os valores dos desvios-padrão das 3 coordenadas da aceleração 
+  em intervalos de 1 minuto dentro de 1 hora.
+  
+  ![](https://github.com/andssuu/mestrado/blob/master/figures/exp1/accelerometer/0h/std/exp1_acc_std_6-7.png)
 
-  - ```acc_boxplot_minute_std.py```: gráfico do tipo boxoplot com os valores dos desvios-padrão das 3 coordenadas da aceleração em intervalos de 1 minuto dentro de 1 hora.  
+
+  - ```acc_boxplot_minute_std.py```: gráfico do tipo boxoplot com os valores dos desvios-padrão das 3 coordenadas da aceleração em intervalos de 1 minuto dentro de 1 hora.
 
 
   ### Giroscópio (TODO)
