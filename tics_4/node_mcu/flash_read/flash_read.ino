@@ -1,6 +1,6 @@
 #include <FS.h>
 
-String file_name = "/data/acc.txt";
+String file_name = "/data/acc.csv";
 
 void readFile(String path){
   // Leitura do arquivo 
