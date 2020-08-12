@@ -1,65 +1,48 @@
+#include <NTPClient.h>
+#include <WiFiUdp.h>
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include <TimeAlarms.h>
 
 /* ssid e password do AP ao qual se deseja conectar */
-const char* ssid = "";
-const char* password = "";
+const char* ssid = "...";
+const char* password = "!123?QWE...";
 /* endereco do servidor onde está instalado o ThingsBoard
 // const char* mqtt_server = "192.168.X.XXX";
 /* ou para o ThingsBoard live demo */
-const char* mqtt_server = "demo.thingsboard.io";
+//const char* mqtt_server = "demo.thingsboard.io";
+const char* mqtt_server = "10.0.0.104";
 /* credenciais para o device que se deseja conectar */
-//const char* device_token = "3KD8jT0vc2qrCB16jm07";
-//const char* device_token = "qc53IaxGMtoFYpEHdPuf";
-const char* device_token = "4wrqbDY22AVUqBvZRnd0"; //ACC
+//const char* device_token = "cfttoHJ3kIFalrii4EMK"; // THINGSBOARD DEMO
+const char* device_token = "Cy6XWLVDOVdFgjcexVSR"; // THINGSBOARD LOCAL
 /* instancia o cliente Wi-Fi */
 WiFiClient wifi_client;
 /* instancia o cliente MQTT */
 PubSubClient mqtt_client(wifi_client);
+double _time;
+double  _time_plus;
+double  last_time;
+//unsigned int _time2;
+double  _time_mili;
 
-// --------------- ACC BEGBIN --------------- 
+// Define NTP Client to get time
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP, "pool.ntp.org", 0); //set uct-0
+
+// --------------- ACC BEGIN ---------------
 #include "I2Cdev.h"
 #include <FS.h>
 #include "MPU6050_6Axis_MotionApps20.h"
 #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
-    #include "Wire.h"
+#include "Wire.h"
 #endif
 MPU6050 mpu;
-// uncomment "OUTPUT_READABLE_QUATERNION" if you want to see the actual
-// quaternion components in a [w, x, y, z] format (not best for parsing
-// on a remote host such as Processing or something though)
-//#define OUTPUT_READABLE_QUATERNION
-
-// uncomment "OUTPUT_READABLE_EULER" if you want to see Euler angles
-// (in degrees) calculated from the quaternions coming from the FIFO.
-// Note that Euler angles suffer from gimbal lock (for more info, see
-// http://en.wikipedia.org/wiki/Gimbal_lock)
-// #define OUTPUT_READABLE_EULER
-
-// uncomment "OUTPUT_READABLE_YAWPITCHROLL" if you want to see the yaw/
-// pitch/roll angles (in degrees) calculated from the quaternions coming
-// from the FIFO. Note this also requires gravity vector calculations.
-// Also note that yaw/pitch/roll angles suffer from gimbal lock (for
-// more info, see: http://en.wikipedia.org/wiki/Gimbal_lock)
-// #define OUTPUT_READABLE_YAWPITCHROLL
-
-// uncomment "OUTPUT_READABLE_REALACCEL" if you want to see acceleration
-// components with gravity removed. This acceleration reference frame is
-// not compensated for orientation, so +X is always +X according to the
-// sensor, just without the effects of gravity. If you want acceleration
-// compensated for orientation, us OUTPUT_READABLE_WORLDACCEL instead.
-// #define OUTPUT_READABLE_REALACCEL
 
 // uncomment "OUTPUT_READABLE_WORLDACCEL" if you want to see acceleration
 // components with gravity removed and adjusted for the world frame of
 // reference (yaw is relative to initial orientation, since no magnetometer
 // is present in this case). Could be quite handy in some cases.
 #define OUTPUT_READABLE_WORLDACCEL
-
-// uncomment "OUTPUT_TEAPOT" if you want output that matches the
-// format used for the InvenSense teapot demo
-//#define OUTPUT_TEAPOT
 
 #define INTERRUPT_PIN 2  // use pin 2 on Arduino Uno & most boards
 #define LED_PIN 13 // (Arduino is 13, Teensy is 11, Teensy++ is 6)
@@ -87,20 +70,7 @@ String file_name = "/data/acc.csv";
 volatile bool mpuInterrupt = false;     // indicates whether MPU interrupt pin has gone high
 
 void dmpDataReady(){
-    mpuInterrupt = true;
-}
-
-void writeFile(VectorInt16 acc, String path){
-  //Adiciona conteúdo ao arquivo
-  File rFile = SPIFFS.open(path, "a"); 
-  if(!rFile){
-    Serial.println("Erro ao abrir arquivo!");
-  } else {
-    rFile.println(String(acc.x)+";"+String(acc.y)+";"+String(acc.z));
-    //Serial.print("gravou estado: ");
-    //Serial.println(String(acc.x)+";"+String(acc.y)+";"+String(acc.z));
-  }
-  rFile.close();
+  mpuInterrupt = true;
 }
 // --------------- ACC END --------------- 
 
@@ -112,7 +82,7 @@ void conectar_wifi() {
   /* tenta iniciar a conexao com a rede Wi-Fi */
   WiFi.begin(ssid, password);
   /* verifica o status e aguarda a conexao */
-  while (WiFi.status() != WL_CONNECTED) {
+  while(WiFi.status()!=WL_CONNECTED){
     delay(500);
     Serial.print(".");
   }
@@ -123,9 +93,9 @@ void conectar_wifi() {
   Serial.println(WiFi.localIP());
 }
 
-void reconectar() {
+void reconectar(){
   /* loop ate que esteja reconectado com o broker MQTT */
-  while (!mqtt_client.connected()) {
+  while(!mqtt_client.connected()){
     /* verifica a conexao Wi-Fi */
     if (WiFi.status() != WL_CONNECTED) {
       /* reconecta com o Wi-Fi */
@@ -136,7 +106,7 @@ void reconectar() {
     if (mqtt_client.connect("wemos", device_token, NULL)) {
       Serial.println("conectado");
     } 
-    else {
+    else{
       Serial.print("falhou, rc=");
       Serial.print(mqtt_client.state());
       Serial.println(" tentando novamente em 5s");
@@ -145,28 +115,6 @@ void reconectar() {
     }
   }
 }
-
-void coletar_e_enviar_dados(){
-  Serial.print("\n Coletando dados da acc: ");
-  // if programming failed, don't try to do anything
-  //Serial.print(mpu.dmpGetCurrentFIFOPacket(fifoBuffer));
-    /* converte os dados lidos para String */
-    String acc_x = String(aaWorld.x);
-    String acc_y = String(aaWorld.y);
-    String acc_z = String(aaWorld.z);
-    /* cria o payload da mensagem MQTT no formato JSON */
-    String payload = "{";
-    payload += "\"acc_x\":"; payload += acc_x; payload += ",";
-    payload += "\"acc_y\":"; payload += acc_y; payload += ",";
-    payload += "\"acc_z\":"; payload += acc_z;
-    payload += "}";
-    /* converte os dados em formato JSON de String para char[] */
-    char dados_json[100];
-    payload.toCharArray(dados_json, 100);
-    /* envia o pacote MQTT com os dados dos sensores */
-    mqtt_client.publish( "v1/devices/me/telemetry", dados_json);
-}
-
 // ================================================================
 // ===                      INITIAL SETUP                       ===
 // ================================================================
@@ -178,8 +126,6 @@ void setup(){
   conectar_wifi();
   /* conectar ao broker MQTT */
   mqtt_client.setServer(mqtt_server, 1883);
-  /* programa um evento de tempo a cada 10s para enviar os dados dos sensores */
-  //Alarm.timerRepeat(5, coletar_e_enviar_dados);
   // join I2C bus (I2Cdev library doesn't do this automatically)
   #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
       Wire.begin(D5, D6);
@@ -224,14 +170,16 @@ void setup(){
       Serial.print(devStatus);
       Serial.println(F(")"));
   }
-  //Tratamento de Arquivos
-  //Iniciando sistema de arquivos
-  if(SPIFFS.begin()){
-    Serial.println("\nSistema de arquivos aberto com sucesso!");
-  }
-  else{
-    Serial.println("\nErro ao abrir o sistema de arquivos");
-  }  
+  timeClient.begin();
+  timeClient.setTimeOffset(0);
+  timeClient.update();
+  //Serial.println(timeClient.getEpochTime());
+  //  Serial.println(_time*1000);
+  _time = timeClient.getEpochTime();
+  //Serial.println(_time, 0);
+  _time = _time*1000;
+  //Serial.println(_time);
+  last_time = millis();
 }
 
 // ================================================================
@@ -239,46 +187,41 @@ void setup(){
 // ================================================================
 
 void loop(){
-  if(!dmpReady) return;
+  // if(!dmpReady) return;
   // read a packet from FIFO
   if(mpu.dmpGetCurrentFIFOPacket(fifoBuffer)){ // Get the Latest packet 
-    #ifdef OUTPUT_READABLE_WORLDACCEL
-      // display initial world-frame acceleration, adjusted to remove gravity
-      // and rotated based on known orientation from quaternion
-      mpu.dmpGetQuaternion(&q, fifoBuffer);
-      mpu.dmpGetAccel(&aa, fifoBuffer);
-      mpu.dmpGetGravity(&gravity, &q);
-      mpu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
-      mpu.dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
-      Serial.print("aworld x:\t");
-      Serial.print(aaWorld.x);
-      Serial.print("\t y: ");
-      Serial.print(aaWorld.y);
-      Serial.print("\t z: ");
-      Serial.println(aaWorld.z);
-      //writeFile(aaWorld, file_name);
-      String acc_x = String(aaWorld.x);
-      String acc_y = String(aaWorld.y);
-      String acc_z = String(aaWorld.z);
-      /* cria o payload da mensagem MQTT no formato JSON */
-      String payload = "{";
-      payload += "\"acc_x\":"; payload += acc_x; payload += ",";
-      payload += "\"acc_y\":"; payload += acc_y; payload += ",";
-      payload += "\"acc_z\":"; payload += acc_z;
-      payload += "}";
-      /* converte os dados em formato JSON de String para char[] */
-      char dados_json[100];
-      payload.toCharArray(dados_json, 100);
-      /* envia o pacote MQTT com os dados dos sensores */
-      mqtt_client.publish( "v1/devices/me/telemetry", dados_json);
-    #endif
+    //Serial.println(_time);
+    //Serial.println(_time*1000);
+    //Serial.println(last_time, 0);
+    _time_mili = millis();
+    //Serial.println(_time_mili, 0);
+    _time_plus = _time_mili-last_time;
+    last_time = _time_mili;
+    //Serial.println(_time_plus, 0);
+    _time = _time + _time_plus;
+    //Serial.println(_time, 0);
+    // display initial world-frame acceleration, adjusted to remove gravity
+    // and rotated based on known orientation from quaternion
+    mpu.dmpGetQuaternion(&q, fifoBuffer);
+    mpu.dmpGetAccel(&aa, fifoBuffer);
+    mpu.dmpGetGravity(&gravity, &q);
+    mpu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
+    mpu.dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
+    /* cria o payload da mensagem MQTT no formato JSON */
+    //Serial.println(_time1*1000);
+    String payload ="{\"ts\":"+String(_time, 0)+",\"values\":{\"x\":"+String(aaWorld.x)+",\"y\":"+String(aaWorld.y)+",\"z\":"+String(aaWorld.z)+"}}";
+    Serial.println(payload);
+    //{"ts":1451649600512, "values":{"key1":"value1", "key2":"value2"}}
+    /* converte os dados em formato JSON de String para char[] */
+    char dados_json[100];
+    payload.toCharArray(dados_json, 100);
+    /* envia o pacote MQTT com os dados dos sensores */
+    mqtt_client.publish( "v1/devices/me/telemetry", dados_json);
   }
   /* verifica status da conexao */
   if(!mqtt_client.connected()){
     reconectar();
   }
-  /* executa a funcao de loop da biblioteca TimeAlarm */
-  Alarm.delay(100);
   /* executa a funcao de loop do cliente MQTT */
   mqtt_client.loop();
 }
