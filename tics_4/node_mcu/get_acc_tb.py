@@ -1,10 +1,10 @@
 import json
 import requests
 
-thingsboard = 'demo.thingsboard.io'
-username = 'anderson.bcc.uag@gmail.com'
-password = 'thingsboard'
-device_id = 'ffdc20f0-dd75-11ea-b1ac-638f0a979ee0'
+thingsboard = '10.0.0.102:8080'
+username = 'tenant@thingsboard.org'
+password = 'tenant'
+device_id = '67e62be0-dd63-11ea-b16a-5de9e0667d57'
 url = 'http://{}/api/auth/login'.format(thingsboard)
 payload = {"username":username, "password":password}
 headers = {'content-type': 'application/json', 'Accept': 'application/json'}
@@ -15,7 +15,6 @@ headers = {'content-type': 'application/json', 'X-Authorization': 'Bearer {}'.fo
 #url = 'http://thingsboard:8080/api/plugins/telemetry/DEVICE/b7fa3200-dc16-11ea-b097-7bbc10df19ff/values/timeseries?keys=x,y,z&startTs=0000000000000&endTs=9999999999999&agg=NON'
 url = 'http://{}/api/plugins/telemetry/DEVICE/{}/values/timeseries?keys=x,y,z&startTs=0000000000000&endTs=9999999999999&agg=NON'.format(thingsboard, device_id)
 r = requests.get(url, headers=headers)
-
 for x, y, z in zip(r.json()['x'], r.json()['y'], r.json()['z']):
 	print(x, end=' ')
 	print(y, end=' ')

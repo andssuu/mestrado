@@ -10,10 +10,10 @@
 
 const char* ssid = "...";
 const char* password = "!123?QWE...";
-const char* mqtt_server = "demo.thingsboard.io";
-//const char* mqtt_server = "10.0.0.101";
-const char* device_token = "XM5DQeXupU6OzvF06sDP"; // THINGSBOARD DEMO
-//const char* device_token = "7SWvR7FGz8Rf77jG5l52"; // THINGSBOARD LOCAL
+//const char* mqtt_server = "demo.thingsboard.io";
+//const char* device_token = "XM5DQeXupU6OzvF06sDP"; // THINGSBOARD DEMO
+const char* mqtt_server = "10.0.0.102";
+const char* device_token = "7SWvR7FGz8Rf77jG5l52"; // THINGSBOARD LOCAL
 WiFiClient wifi_client;
 PubSubClient mqtt_client(wifi_client);
 double _time;
