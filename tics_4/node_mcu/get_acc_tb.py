@@ -1,7 +1,7 @@
 import json
 import requests
 
-thingsboard = '10.0.0.102:8080'
+thingsboard = '10.0.0.103:8080'
 username = 'tenant@thingsboard.org'
 password = 'tenant'
 device_id = '67e62be0-dd63-11ea-b16a-5de9e0667d57'

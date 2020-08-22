@@ -12,7 +12,7 @@ const char* ssid = "...";
 const char* password = "!123?QWE...";
 //const char* mqtt_server = "demo.thingsboard.io";
 //const char* device_token = "XM5DQeXupU6OzvF06sDP"; // THINGSBOARD DEMO
-const char* mqtt_server = "10.0.0.102";
+const char* mqtt_server = "10.0.0.103";
 const char* device_token = "7SWvR7FGz8Rf77jG5l52"; // THINGSBOARD LOCAL
 WiFiClient wifi_client;
 PubSubClient mqtt_client(wifi_client);
@@ -163,7 +163,7 @@ void loop(){
     Serial.println(payload);
     char dados_json[100];
     payload.toCharArray(dados_json, 100);
-    mqtt_client.publish( "v1/devices/me/telemetry", dados_json);
+    mqtt_client.publish("v1/devices/me/telemetry", dados_json);
   }
   if(!mqtt_client.connected()){
     reconectar();
