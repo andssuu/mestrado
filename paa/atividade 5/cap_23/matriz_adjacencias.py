@@ -6,12 +6,31 @@ class MatrizAdjacencias():
         self.V = [Vertice(v) for v in V]
         self.E = E
         self.matriz = [[0 for x in range(len(V))] for y in range(len(V))]
-        for e in E:
+        for e in self.E:
             self.matriz[e[0]][e[1]], self.matriz[e[1]][e[0]] = 1, 1
         self.pre_ordem, self.pos_ordem, self.pos_ordem_reversa = [], [], []
 
     def vizinhanca(self, u):
         return [self.V[n] for n, l in enumerate(self.matriz[u.valor]) if l]
+
+    def chama_busca(self, s=None, tipo_busca=''):
+        for v in self.V:
+            v.visitado = 0
+            v.predecessor = None
+        if tipo_busca == 'largura':
+            self.busca_largura(s)
+        elif tipo_busca == 'largura_distancia':
+            self.busca_largura_distancia(s)
+        elif(tipo_busca == 'profundidade'):
+            self.busca_profundidade(s)
+        elif(tipo_busca == 'profundidade_iterativa'):
+            self.busca_prof_iterativa(s)
+        elif(tipo_busca == 'profundidade_recursiva'):
+            self.busca_prof_recursiva(s)
+        elif(tipo_busca == 'componentes'):
+            return self.busca_componentes()
+        else:
+            print('Tipo de busca inválido')
 
     def constroi_caminho(self, s, v):
         '''algoritmo 23.4'''
@@ -20,9 +39,9 @@ class MatrizAdjacencias():
             return L
         atual = v
         while(atual.valor != s.valor):
-            L.append(atual)
+            L = [atual] + L
             atual = atual.predecessor
-        L.append(s)
+        L = [s]+L
         return L
 
     def busca_largura(self, s):
@@ -93,7 +112,7 @@ class MatrizAdjacencias():
         self.pos_ordem.append(s)
         self.pos_ordem_reversa = [s] + self.pos_ordem_reversa
 
-    def busca_componente(self):
+    def busca_componentes(self):
         '''algoritmo 23.10'''
         for v in self.V[1:]:
             v.visitado = 0
@@ -102,9 +121,8 @@ class MatrizAdjacencias():
         for s in self.V[1:]:
             if s.visitado == 0:
                 s.visitado = 1
-                s.componente = s
+                s.componente = s.valor
                 qtd_componentes += 1
-                # self.busca_largura(s)
                 self.busca_profundidade(s)
         return qtd_componentes
 
@@ -141,18 +159,21 @@ class MatrizAdjacenciasDigrafo(MatrizAdjacencias):
         return MatrizAdjacenciasDigrafo([v.valor for v in G.V], E)
 
     def componentes_fortemente_conexas(self):
+        '''algoritmo 23.13'''
         for v in self.V[1:]:
             v.visitado = 0
             v.predecessor = None
         inverso = self.reverso(self)
-        inverso.busca_componente()
+        inverso.busca_componentes()
+        for v in inverso.V[1:]:
+            v.visitado = 0
         for u in inverso.pos_ordem_reversa:
-            if u.visitado == 0:
-                u.componente = u
-                self.busca_profundidade(u)
+            if self.V[u.valor].visitado == 0:
+                self.V[u.valor].componente = u.valor
+                self.busca_profundidade(self.V[u.valor])
 
     def ordenacao_topologica(self):
-        self.busca_componente()
+        self.busca_componentes()
         f = []
         for atual in self.pos_ordem_reversa:
             f.append(atual)
