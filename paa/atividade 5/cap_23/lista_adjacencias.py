@@ -15,6 +15,7 @@ class ListaAdjacencias():
         return [self.V[v] for v in self.lista[u.valor]]
 
     def chama_busca(self, s=None, tipo_busca=''):
+        '''algoritmo 23.2'''
         for v in self.V:
             v.visitado = 0
             v.predecessor = None

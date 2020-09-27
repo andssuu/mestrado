@@ -14,6 +14,7 @@ class MatrizAdjacencias():
         return [self.V[n] for n, l in enumerate(self.matriz[u.valor]) if l]
 
     def chama_busca(self, s=None, tipo_busca=''):
+        '''algoritmo 23.2'''
         for v in self.V:
             v.visitado = 0
             v.predecessor = None
