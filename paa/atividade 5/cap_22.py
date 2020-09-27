@@ -25,7 +25,7 @@ class ListaAdjacencias():
             self.lista[e[1]].append(e[0])
 
     def grau_maximo(self):
-        ''' Algoritmo 22.3 '''
+        '''Algoritmo 22.3'''
         n = len(self.lista)
         max = 0
         for x in range(1, n):
@@ -40,12 +40,29 @@ class ListaAdjacencias():
 if __name__ == "__main__":
     V = [1, 2, 3, 4]
     E = [[1, 2], [2, 3], [2, 4]]
+    print('''
+    #############################################
+    
+        Implementações com Matriz de Adjacências
+    
+    #############################################
+    ''')
     # Matriz adjacencias
     matriz_adjacencias = MatrizAdjacencias(V, E)
-    print(matriz_adjacencias.matriz[1:])
-    print(matriz_adjacencias.grau_maximo())
+    print("Matriz de adjacencias: ")
+    [print(x[1:]) for x in matriz_adjacencias.matriz[1:]]
+    print("Grau Máximo: ", matriz_adjacencias.grau_maximo())
 
+    print('''
+    #############################################
+    
+        Implementações com Lista de Adjacências
+    
+    #############################################
+    ''')
     # Lista de adjacencias
     lista_adjacencias = ListaAdjacencias(V, E)
-    print(lista_adjacencias.lista[1:])
-    print(lista_adjacencias.grau_maximo())
+    print("Lista de adjacencias: ")
+    [print('Vertice {}: {}'.format(n+1, x))
+     for n, x in enumerate(lista_adjacencias.lista[1:])]
+    print("Grau Máximo: ", lista_adjacencias.grau_maximo())

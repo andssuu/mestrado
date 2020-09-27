@@ -76,7 +76,6 @@ if __name__ == "__main__":
     print("Ordenacao topologica : ",
           [n.valor for n in G_digrafo.ordenacao_topologica()])
 
-    # Lista de adjacencias
     print('''
     #############################################
     
@@ -88,6 +87,7 @@ if __name__ == "__main__":
     V = [x for x in range(10)]
     E = [[1, 2], [1, 5], [1, 8], [2, 5], [2, 6], [3, 4], [3, 6],
          [3, 8], [4, 5], [5, 8], [6, 8], [6, 9], [7, 8]]
+    # Lista de adjacencias
     G = ListaAdjacencias(V, E)
     print("Lista de adjacencias: ")
     [print('Vertice {}: {}'.format(n+1, x)) for n, x in enumerate(G.lista[1:])]
