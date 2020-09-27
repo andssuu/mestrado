@@ -127,20 +127,6 @@ class MatrizAdjacencias():
                 self.busca_profundidade(s)
         return qtd_componentes
 
-    def busca_largura_digrafo(self, s):
-        '''algoritmo 23.11'''
-        s.visitado = 1
-        fila = []
-        fila.append(s)
-        while(len(fila) > 0):
-            u = fila[0]  # desenfileirar
-            fila = fila[1:]
-            for v in self.vizinhanca(u):
-                if v.visitado == 0:
-                    v.visitado = 1
-                    v.predecessor = u
-                    fila.append(v)
-
 
 class MatrizAdjacenciasDigrafo(MatrizAdjacencias):
     def __init__(self, V, E):
@@ -174,6 +160,7 @@ class MatrizAdjacenciasDigrafo(MatrizAdjacencias):
                 self.busca_profundidade(self.V[u.valor])
 
     def ordenacao_topologica(self):
+        '''algoritmo 23.14'''
         self.busca_componentes()
         f = []
         for atual in self.pos_ordem_reversa:
