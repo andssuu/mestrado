@@ -47,7 +47,7 @@ class ListaAdjacencias():
         return L
 
     def busca_largura(self, s):
-        ''' algoritmo 23.5 e 23.11'''
+        '''algoritmo 23.5 e 23.11'''
         s.visitado = 1
         fila = []
         fila.append(s)
@@ -129,7 +129,7 @@ class ListaAdjacencias():
         return qtd_componentes
 
     def busca_largura_digrafo(self, s):
-        ''' algoritmo 23.11'''
+        '''algoritmo 23.11'''
         s.visitado = 1
         fila = []
         fila.append(s)
