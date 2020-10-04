@@ -1,3 +1,4 @@
+from copy import deepcopy
 from vertice import Vertice
 
 
@@ -139,7 +140,6 @@ class MatrizAdjacenciasDigrafo(MatrizAdjacencias):
 
     @staticmethod
     def reverso(G):
-        from copy import deepcopy
         E = deepcopy(G.E)
         for e in E:
             e[0], e[1] = e[1], e[0]
