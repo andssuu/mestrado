@@ -51,7 +51,10 @@ class ListaAdjacencias():
         s.visitado = 1
         fila = []
         fila.append(s)
+        _iter = 1
         while(len(fila) > 0):
+            print("Iteração: {}".format(_iter))
+            print("Estado da fila: {}".format([f.valor for f in fila]))
             u = fila[0]  # desenfileirar
             fila = fila[1:]
             for v in self.vizinhanca(u):
@@ -59,6 +62,7 @@ class ListaAdjacencias():
                     v.visitado = 1
                     v.predecessor = u
                     fila.append(v)
+            _iter += 1
 
     def busca_largura_distancia(self, s):
         '''algoritmo 23.6'''
