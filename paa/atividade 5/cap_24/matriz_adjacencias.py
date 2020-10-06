@@ -177,11 +177,22 @@ class MatrizAdjacencias():
         C = sorted(deepcopy(self.E), key=lambda e: e[2])
         F = []  # conjunto de arestas
         sets = [UnionFind(v.valor) for v in self.V]
+        _iter = 1
         for c in C:
+            print("Iteração {}".format(_iter))
             u, v = sets[c[0]], sets[c[1]]
+            print("\tTestando aresta {}-{}".format(c[0], c[1]))
             if u.find_set() != v.find_set():
                 F = F+[c]
                 UnionFind.union(u, v)
+                print("\tAresta {}-{} adicionada".format(c[0], c[1]))
+                print("\tEstado da Union-Find:")
+                [print("\t\tVértice: {} Representante: {} Tamanho: {} Lista: {}".format(s.valor, s.representante.valor, len(s.lista), [e.valor for e in s.lista]))
+                 for s in sets[1:]]
+            else:
+                print("\tArestas com o mesmo representante {}".format(
+                    u.representante.valor))
+            _iter += 1
         return F
 
     def prim(self):
@@ -189,6 +200,7 @@ class MatrizAdjacencias():
             v.visitado = 0
             v.predecessor = None
         x = self.V[6]  # escolha de qualquer vértice
+        print("Iniciando pelo vértice {}".format(x.valor))
         x.visitado = 1
         visitados = []
         _n = 1
@@ -196,16 +208,16 @@ class MatrizAdjacencias():
             print("Iteração: ", _n)
             for e in sorted(deepcopy(self.E), key=lambda e: e[2]):
                 if (self.V[e[0]].visitado == 1) and (self.V[e[1]].visitado == 0):
-                    print("Aresta {}-{} adicionada com peso {}".format(e[0], e[1],
-                                                                       e[2]))
+                    print("Aresta mímina {}-{} adicionada com peso {}".format(e[0], e[1],
+                                                                              e[2]))
                     self.V[e[1]].visitado = 1
                     self.V[e[1]].predecessor = self.V[e[0]]
                     visitados.append(
                         [self.V[e[0]].valor, self.V[e[1]].valor])
                     break
                 elif self.V[e[0]].visitado == 0 and self.V[e[1]].visitado == 1:
-                    print("Aresta {}-{} adicionada com peso {}".format(e[0], e[1],
-                                                                       e[2]))
+                    print("Aresta mímina {}-{} adicionada com peso {}".format(e[0], e[1],
+                                                                              e[2]))
                     self.V[e[0]].visitado = 1
                     self.V[e[0]].predecessor = self.V[e[1]]
                     visitados.append(
@@ -228,49 +240,43 @@ class MatrizAdjacencias():
         print("Atualizando prioridade, visitado e predecessor dos vizinhos de {}"
               .format(s.valor))
         for v in self.vizinhanca(s):
-            print("Acessando o vértice {}".format(v.valor))
+            print("\tAcessando o vértice {}".format(v.valor))
             v.prioridade = -w[s.valor][v.valor]
             v.visitado = 0
             v.predecessor = s
             insere_heap(H, v)
-            print("Estado atual da Heap: ", [h.valor for h in H])
-            print("predecessor: ", end="")
+            print("\tEstado atual da Heap: ", [h.valor for h in H])
+            print("\tpredecessor: ", end="")
             [print(h.predecessor.valor, end=" ") if h.predecessor is not None else print(None, end=" ")
              for h in H]
-            print()
-            print("visitado: ", end="")
+            print("\n\tvisitado: ", end="")
             [print(h.visitado, end=" ") for h in H]
-            print()
-            print("indice: ", end="")
+            print("\n\tindice: ", end="")
             [print(h.indice, end=" ") for h in H]
-            print()
-            print("prioridade: ", end="")
+            print("\n\tprioridade: ", end="")
             [print(h.prioridade, end=" ") for h in H]
             print()
-        print("Atualizando prioridade, visitado e predecessores dos não vizinhos de {}".
+        print("\nAtualizando prioridade, visitado e predecessores dos não vizinhos de {}".
               format(s.valor))
         for v in self.nao_vizinhanca(s):
-            print("Acessando o vértice {}".format(v.valor))
+            print("\tAcessando o vértice {}".format(v.valor))
             v.prioridade = -inf
             v.visitado = 0
             v.predecessor = None
             insere_heap(H, v)
-            print("Estado atual da Heap: ", [h.valor for h in H])
-            print("predecessor: ", end="")
+            print("\tEstado atual da Heap: ", [h.valor for h in H])
+            print("\tpredecessor: ", end="")
             [print(h.predecessor.valor, end=" ") if h.predecessor is not None else print(None, end=" ")
              for h in H]
-            print()
-            print("visitado: ", end="")
+            print("\n\tvisitado: ", end="")
             [print(h.visitado, end=" ") for h in H]
-            print()
-            print("indice: ", end="")
+            print("\n\tindice: ", end="")
             [print(h.indice, end=" ") for h in H]
-            print()
-            print("prioridade: ", end="")
+            print("\n\tprioridade: ", end="")
             [print(h.prioridade, end=" ") for h in H]
             print()
         while len(H) > 0:
-            print("Revomendo o vértice {} da heap".format(H[0].valor))
+            print("\nRevomendo o vértice {} da heap".format(H[0].valor))
             v, H = remove_heap(H)
             v.visitado = 1
             for x in self.vizinhanca(v):
@@ -280,7 +286,7 @@ class MatrizAdjacencias():
             print("Prioridades atualizadas da Heap: ", [h.valor for h in H])
         print("Árvore geradora")
         for v in self.V[1:]:
-            predecessor = "Null" if v.predecessor is None else v.predecessor.valor
+            predecessor = "None" if v.predecessor is None else v.predecessor.valor
             print("Vertice: {}, prioridade: {}, predecessor: {}".format(
                 v.valor, v.prioridade, predecessor))
 
@@ -335,24 +341,3 @@ class MatrizAdjacenciasDigrafo(MatrizAdjacencias):
         else:
             self.matriz[s.valor][v.valor] = 1
             return False
-
-    def fleury(self, s):
-        W = [None for v in range(len(self.E)+2)]
-        W[1] = s
-        i = 1
-        vizinhos = self.vizinhanca(W[i])
-        while(len(vizinhos) >= 1):
-            seguro = False
-            for y in self.vizinhanca(W[i]):
-                if (self._arco(W[i], y)):  # seguro
-                    seguro = True
-                    break
-            if seguro:
-                W[i+1] = y
-            else:
-                W[i+1] = vizinhos[0]
-            # remove aresta em D
-            self.matriz[W[i].valor][W[i+1].valor] = 0
-            i += 1
-            vizinhos = self.vizinhanca(W[i])
-        return W

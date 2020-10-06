@@ -18,22 +18,24 @@ if __name__ == "__main__":
     G = MatrizAdjacencias(V, E)
     print("Matriz de adjacencias: ")
     [print(x[1:]) for x in G.matriz[1:]]
-    # F = G.kruskal()
-    # [print(x) for x in F]
-    # arvore_minima = MatrizAdjacencias(V, F)
-    # print("Matriz de adjacencias (Árvore Mínima): ")
-    # [print(x[1:]) for x in arvore_minima.matriz[1:]]
-    # F = G.kruskal_union_find()
-    # [print(x) for x in F]
-    # G.prim()
-    # G.prim_heap()
-    # G.prim_heap()
-
-    V = [x for x in range(9)]
-    E = [[1, 2], [1, 4], [2, 5], [3, 1], [3, 5], [4, 5], [5, 1],
-         [5, 3], [5, 6], [6, 3], [6, 7], [7, 6], [7, 8], [8, 7]]
-    G = MatrizAdjacenciasDigrafo(V, E)
-    G.fleury(G.V[3]
+    print(">>>>>>>>>>>>>>>>>>>>>>>>> Kruskal <<<<<<<<<<<<<<<<<<<<<<<<<")
+    F = G.kruskal()
+    print("Lista de arestas da árvore geradora mínima")
+    [print("Aresta {}-{} com peso {}".format(x[0], x[1], x[2])) for x in F]
+    arvore_minima = MatrizAdjacencias(V, F)
+    print("Matriz de adjacencias (Árvore Geradora Mínima):")
+    [print(x[1:]) for x in arvore_minima.matriz[1:]]
+    print(">>>>>>>>>>>>>>>>>>>>>>>>> Kruskal Union Find <<<<<<<<<<<<<<<<<<<<<<<<<")
+    F = G.kruskal_union_find()
+    print("Lista de arestas da árvore geradora mínima")
+    [print("Aresta {}-{} com peso {}".format(x[0], x[1], x[2])) for x in F]
+    arvore_minima = MatrizAdjacencias(V, F)
+    print("Matriz de adjacencias (Árvore Geradora Mínima):")
+    [print(x[1:]) for x in arvore_minima.matriz[1:]]
+    print(">>>>>>>>>>>>>>>>>>>>>>>>> Prim <<<<<<<<<<<<<<<<<<<<<<<<<")
+    G.prim()
+    print(">>>>>>>>>>>>>>>>>>>>>>>>> Prim Heap <<<<<<<<<<<<<<<<<<<<<<<<<")
+    G.prim_heap()
     # print('''
     # #############################################
 
