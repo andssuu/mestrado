@@ -136,18 +136,6 @@ class MatrizAdjacencias():
                 self.busca_profundidade(s)
         return qtd_componentes
 
-    def busca_profundidade123(self, s, matriz_aux):
-        '''algoritmo 23.9 e 23.12'''
-        self.pre_ordem.append(s)
-        s.visitado = 1
-        for v in self.vizinhanca(s):
-            if v.visitado == 0:
-                v.predecessor = s
-                v.componente = s.componente
-                self.busca_profundidade(v)
-        self.pos_ordem.append(s)
-        self.pos_ordem_reversa = [s] + self.pos_ordem_reversa
-
     def verifica_ciclo(self, s, matriz_aux):
         s.visitado = 1
         for v in self.vizinhanca(s):
