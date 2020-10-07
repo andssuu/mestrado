@@ -152,6 +152,7 @@ class MatrizAdjacenciasDigrafo(MatrizAdjacencias):
             return False
 
     def fleury(self, s):
+        '''algoritmo 25.1'''
         W = [None for v in range(len(self.E)+2)]
         W[1] = s
         i = 1
