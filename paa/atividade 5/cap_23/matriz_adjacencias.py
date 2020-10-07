@@ -1,4 +1,5 @@
 from copy import deepcopy
+
 from vertice import Vertice
 
 
@@ -48,12 +49,12 @@ class MatrizAdjacencias():
 
     def busca_largura(self, s):
         '''algoritmo 23.5 e 23.11'''
-        _iter = 1
         s.visitado = 1
         fila = []
         fila.append(s)
         print("Começando com o vértice {}".format(s.valor))
         print("Estado da fila: {}".format([f.valor for f in fila]))
+        _iter = 1
         while(len(fila) > 0):
             print("Iteração: {}".format(_iter))
             print("\tEstado da fila: {}".format([f.valor for f in fila]))

@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from vertice import Vertice
 
 
@@ -51,16 +53,20 @@ class ListaAdjacencias():
         s.visitado = 1
         fila = []
         fila.append(s)
+        print("Começando com o vértice {}".format(s.valor))
+        print("Estado da fila: {}".format([f.valor for f in fila]))
         _iter = 1
         while(len(fila) > 0):
             print("Iteração: {}".format(_iter))
-            print("Estado da fila: {}".format([f.valor for f in fila]))
+            print("\tEstado da fila: {}".format([f.valor for f in fila]))
             u = fila[0]  # desenfileirar
+            print("\tRemovendo o {} da fila".format(u.valor))
             fila = fila[1:]
             for v in self.vizinhanca(u):
                 if v.visitado == 0:
                     v.visitado = 1
                     v.predecessor = u
+                    print("\tAdicionando vizinho {} na fila".format(v.valor))
                     fila.append(v)
             _iter += 1
 
@@ -69,14 +75,22 @@ class ListaAdjacencias():
         s.visitado = 1
         fila = []
         fila.append(s)
+        _iter = 1
+        print("Começando com o vértice {}".format(s.valor))
+        print("Estado da fila: {}".format([f.valor for f in fila]))
         while(len(fila) > 0):
+            print("Iteração: {}".format(_iter))
+            print("\tEstado da fila: {}".format([f.valor for f in fila]))
             u = fila[0]  # desenfileirar
+            print("\tRemovendo o {} da fila".format(u.valor))
             fila = fila[1:]
             for v in self.vizinhanca(u):
                 if v.visitado == 0:
                     v.visitado = 1
                     v.distancia = u.distancia + 1
                     v.predecessor = u
+                    print("\tAdicionando vizinho {} na fila com distância {}".format(
+                        v.valor, v.distancia))
                     fila.append(v)
 
     def busca_prof_iterativa(self, s):
@@ -84,7 +98,12 @@ class ListaAdjacencias():
         s.visitado = 1
         pilha = []
         pilha.append(s)
+        _iter = 1
+        print("Começando com o vértice {}".format(s.valor))
+        print("Estado da pilha: {}".format([f.valor for f in pilha]))
         while (len(pilha) > 0):
+            print("Iteração: {}".format(_iter))
+            print("\tEstado da pilha: {}".format([f.valor for f in pilha]))
             u = pilha[-1]  # consulta
             visitados = True
             for v in self.vizinhanca(u):
@@ -92,31 +111,47 @@ class ListaAdjacencias():
                     v.visitado = 1
                     v.predecessor = u
                     pilha.append(v)
+                    print("\tAdicionando vizinho {} na pilha com o predecessor {}".format(
+                        v.valor, u.valor))
                     visitados = False
                     break
             # desempilha quando todos vizinhos forem visitados
             if visitados:
+                print("\tDesempilhando {} da pilha".format(pilha[-1].valor))
                 pilha = pilha[:-1]
+            _iter += 1
 
     def busca_prof_recursiva(self, s):
         '''algoritmo 23.8'''
         s.visitado = 1
+        print("Visitando o vértice {}".format(s.valor))
         for v in self.vizinhanca(s):
             if v.visitado == 0:
                 v.predecessor = s
+                print("\tChamada para o vizinho {} na pilha com o predecessor {}".format(
+                    v.valor, s.valor))
                 self.busca_prof_recursiva(v)
 
     def busca_profundidade(self, s):
         '''algoritmo 23.9 e 23.12'''
         self.pre_ordem.append(s)
         s.visitado = 1
+        print("Adicionando o vértice {} na lista de pré-ordem".format(s.valor))
+        print("Estado atual da lista de pré-ordem: {}".format(
+            [v.valor for v in self.pre_ordem]))
         for v in self.vizinhanca(s):
             if v.visitado == 0:
                 v.predecessor = s
                 v.componente = s.componente
+                print("Chamada para o vizinho {} com o predecessor {}".format(
+                    v.valor, s.valor))
                 self.busca_profundidade(v)
         self.pos_ordem.append(s)
         self.pos_ordem_reversa = [s] + self.pos_ordem_reversa
+        print("Estado atual da lista de pós-ordem: {}".format(
+            [v.valor for v in self.pos_ordem]))
+        print("Estado atual da lista de pós-ordem reversa: {}".format(
+            [v.valor for v in self.pos_ordem_reversa]))
 
     def busca_componentes(self):
         '''algoritmo 23.10'''
@@ -144,7 +179,6 @@ class ListaAdjacenciasDigrafo(ListaAdjacencias):
 
     @staticmethod
     def reverso(G):
-        from copy import deepcopy
         E = deepcopy(G.E)
         for e in E:
             e[0], e[1] = e[1], e[0]
@@ -156,18 +190,41 @@ class ListaAdjacenciasDigrafo(ListaAdjacencias):
             v.visitado = 0
             v.predecessor = None
         inverso = self.reverso(self)
+        print("Iniciando com a busca de componentes")
         inverso.busca_componentes()
+        print("Fim da busca de componentes")
         for v in inverso.V[1:]:
             v.visitado = 0
+        print("Estado da pós-ordem reversa: {}".format(
+            [i.valor for i in inverso.pos_ordem_reversa]))
+        _iter = 1
         for u in inverso.pos_ordem_reversa:
+            print("Iteração: {}".format(_iter))
             if self.V[u.valor].visitado == 0:
+                print("\tAcessando o vértice {}".format(u.valor))
+                print("\tAdicionando o vértice {} na componente {}".format(
+                    u.valor, u.valor))
                 self.V[u.valor].componente = u.valor
+                print("\tChamando busca em profundidade para o vértice {}".format(
+                    u.valor))
                 self.busca_profundidade(self.V[u.valor])
+            else:
+                print("\tVértice {} já visitado. Está na componente {}".format(
+                    u.valor, u.componente))
+            _iter += 1
 
     def ordenacao_topologica(self):
         '''algoritmo 23.14'''
+        print("Fazendo a chamada para para busca de componentes")
         self.busca_componentes()
+        print("Fim da busca de componentes")
         f = []
+        print("Estado da lista de pós-ordem reversa: {}".format(
+            [v.valor for v in self.pos_ordem_reversa]))
+        _iter = 1
         for atual in self.pos_ordem_reversa:
+            print("Iteração {}: Adicionando o vértice {} na lista".format(
+                _iter, atual.valor))
             f.append(atual)
+            _iter += 1
         return f
