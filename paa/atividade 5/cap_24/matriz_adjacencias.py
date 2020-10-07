@@ -317,9 +317,6 @@ class MatrizAdjacenciasDigrafo(MatrizAdjacencias):
             f.append(atual)
         return f
 
-    def _d_plus(self, s):
-        return
-
     def _arco(self, s, v):
         self.matriz[s.valor][v.valor] = 0
         self.chama_busca(tipo_busca='profundidade')
