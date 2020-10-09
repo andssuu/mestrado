@@ -52,7 +52,6 @@ if __name__ == "__main__":
     print("Matriz de adjacencias: ")
     [print(x[1:]) for x in matriz_adjacencias.matriz[1:]]
     print("Grau Máximo: ", matriz_adjacencias.grau_maximo())
-
     print('''
     #############################################
     
