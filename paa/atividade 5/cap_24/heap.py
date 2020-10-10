@@ -1,12 +1,6 @@
 from vertice import Vertice
 
 
-# class Nodo():
-#     def __init__(self, prioridade=None, indice=None):
-#         self.prioridade = prioridade
-#         self.indice = indice
-
-
 def corrige_heap_descendo(h, i):
     i -= 1
     maior = i

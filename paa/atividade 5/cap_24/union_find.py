@@ -3,7 +3,6 @@ class UnionFind():
         self.valor = valor
         self.representante = self
         self.lista = [self.representante]
-        #self.tamanho = self.tamanho()
 
     def tamanho(self):
         return len(self.lista)
