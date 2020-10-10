@@ -1,4 +1,9 @@
+from copy import deepcopy
+from math import inf
+
 from vertice import Vertice
+#from union_find import UnionFind
+#from heap import insere_heap, remove_heap, altera_heap
 
 
 class MatrizAdjacencias():
@@ -26,12 +31,12 @@ class MatrizAdjacencias():
             self.busca_largura(s)
         elif tipo_busca == 'largura_distancia':
             self.busca_largura_distancia(s)
-        elif(tipo_busca == 'profundidade'):
-            self.busca_profundidade(s)
         elif(tipo_busca == 'profundidade_iterativa'):
             self.busca_prof_iterativa(s)
         elif(tipo_busca == 'profundidade_recursiva'):
             self.busca_prof_recursiva(s)
+        elif(tipo_busca == 'profundidade'):
+            self.busca_profundidade(s)
         elif(tipo_busca == 'componentes'):
             return self.busca_componentes()
         else:
@@ -39,14 +44,25 @@ class MatrizAdjacencias():
 
     def constroi_caminho(self, s, v):
         '''algoritmo 23.4'''
+        print("Contrução do {}-{} caminho".format(s.valor, v.valor))
         L = []
+        print("Estado Inicial da lista: {}".format(L))
         if v.visitado == 0:
             return L
         atual = v
+        _iter = 1
         while(atual.valor != s.valor):
+            print("Iteração {}: ".format(_iter))
             L = [atual] + L
+            print("\tAdicionando o vértice {} com predecessor {} na lista".format(
+                atual.valor, atual.predecessor.valor))
+            print("\tEstado atual da lista: {}".format([l.valor for l in L]))
             atual = atual.predecessor
+            _iter += 1
+        print("Iteração: {}".format(_iter))
+        print("\tAdicionando {} no início da lista".format(s.valor))
         L = [s]+L
+        print("\tEstado final da lista: {}".format([l.valor for l in L]))
         return L
 
     def busca_largura(self, s):
@@ -54,36 +70,62 @@ class MatrizAdjacencias():
         s.visitado = 1
         fila = []
         fila.append(s)
+        print("Começando com o vértice {}".format(s.valor))
+        print("Estado da fila: {}".format([f.valor for f in fila]))
+        _iter = 1
         while(len(fila) > 0):
+            print("Iteração: {}".format(_iter))
+            print("\tEstado da fila: {}".format([f.valor for f in fila]))
             u = fila[0]  # desenfileirar
+            print("\tRemovendo o {} da fila".format(u.valor))
             fila = fila[1:]
             for v in self.vizinhanca(u):
                 if v.visitado == 0:
                     v.visitado = 1
                     v.predecessor = u
+                    print("\tAdicionando vizinho {} na fila".format(v.valor))
                     fila.append(v)
+            _iter += 1
+        print("Iteração: {}".format(_iter))
+        print("\tFila vazia!")
 
     def busca_largura_distancia(self, s):
         '''algoritmo 23.6'''
         s.visitado = 1
         fila = []
         fila.append(s)
+        _iter = 1
+        print("Começando com o vértice {}".format(s.valor))
+        print("Estado da fila: {}".format([f.valor for f in fila]))
         while(len(fila) > 0):
+            print("Iteração: {}".format(_iter))
+            print("\tEstado da fila: {}".format([f.valor for f in fila]))
             u = fila[0]  # desenfileirar
+            print("\tRemovendo o {} da fila".format(u.valor))
             fila = fila[1:]
             for v in self.vizinhanca(u):
                 if v.visitado == 0:
                     v.visitado = 1
                     v.distancia = u.distancia + 1
                     v.predecessor = u
+                    print("\tAdicionando vizinho {} na fila com distância {}".format(
+                        v.valor, v.distancia))
                     fila.append(v)
+            _iter += 1
+        print("Iteração: {}".format(_iter))
+        print("\tFila vazia!")
 
     def busca_prof_iterativa(self, s):
         '''algoritmo 23.7'''
         s.visitado = 1
         pilha = []
         pilha.append(s)
+        _iter = 1
+        print("Começando com o vértice {}".format(s.valor))
+        print("Estado da pilha: {}".format([f.valor for f in pilha]))
         while (len(pilha) > 0):
+            print("Iteração: {}".format(_iter))
+            print("\tEstado da pilha: {}".format([f.valor for f in pilha]))
             u = pilha[-1]  # consulta
             visitados = True
             for v in self.vizinhanca(u):
@@ -91,31 +133,53 @@ class MatrizAdjacencias():
                     v.visitado = 1
                     v.predecessor = u
                     pilha.append(v)
+                    print("\tAdicionando vizinho {} na pilha com o predecessor {}".format(
+                        v.valor, u.valor))
                     visitados = False
                     break
             # desempilha quando todos vizinhos forem visitados
             if visitados:
+                print("\tDesempilhando {} da pilha".format(pilha[-1].valor))
                 pilha = pilha[:-1]
+            _iter += 1
+        print("Iteração: {}".format(_iter))
+        print("\tPilha vazia!")
 
     def busca_prof_recursiva(self, s):
         '''algoritmo 23.8'''
         s.visitado = 1
+        check = False
+        print("Visitando o vértice {}".format(s.valor))
         for v in self.vizinhanca(s):
             if v.visitado == 0:
+                check = True
                 v.predecessor = s
+                print("\tChamada para o vizinho {} com o predecessor {}".format(
+                    v.valor, s.valor))
                 self.busca_prof_recursiva(v)
+        if not check:
+            print("\tTodos os vizinhos do vértice {} foram visitados".format(s.valor))
 
     def busca_profundidade(self, s):
         '''algoritmo 23.9 e 23.12'''
         self.pre_ordem.append(s)
         s.visitado = 1
+        #print("Adicionando o vértice {} na lista de pré-ordem".format(s.valor))
+        # print("Estado atual da lista de pré-ordem: {}".format(
+        #    [v.valor for v in self.pre_ordem]))
         for v in self.vizinhanca(s):
             if v.visitado == 0:
                 v.predecessor = s
                 v.componente = s.componente
+        #        print("Chamada para o vizinho {} com o predecessor {}".format(
+        #            v.valor, s.valor))
                 self.busca_profundidade(v)
         self.pos_ordem.append(s)
         self.pos_ordem_reversa = [s] + self.pos_ordem_reversa
+        # print("Estado atual da lista de pós-ordem: {}".format(
+        #    [v.valor for v in self.pos_ordem]))
+        # print("Estado atual da lista de pós-ordem reversa: {}".format(
+        #    [v.valor for v in self.pos_ordem_reversa]))
 
     def busca_componentes(self):
         '''algoritmo 23.10'''
@@ -125,11 +189,172 @@ class MatrizAdjacencias():
         qtd_componentes = 0
         for s in self.V[1:]:
             if s.visitado == 0:
+                print("Visitando vértice {}: chama busca em profundidade".format(
+                    s.valor))
                 s.visitado = 1
                 s.componente = s.valor
                 qtd_componentes += 1
                 self.busca_profundidade(s)
+                print("Fim da busca em profundidade no vértice {}".format(s.valor))
+            else:
+                print("Visitando vértice {}: vértice já visitado!".format(s.valor))
         return qtd_componentes
+
+    def _verifica_ciclo(self, s, matriz_aux):
+        s.visitado = 1
+        for v in self.vizinhanca(s):
+            if matriz_aux[s.valor][v.valor]:
+                continue
+            matriz_aux[s.valor][v.valor], matriz_aux[v.valor][s.valor] = 1, 1
+            if v.visitado:
+                matriz_aux[0][0] = 1
+            self._verifica_ciclo(v, matriz_aux)
+
+    def kruskal(self):
+        '''algoritmo 24.1'''
+        C = sorted(deepcopy(self.E), key=lambda e: e[2])
+        F = []  # conjunto de arestas
+        _iter = 1
+        for c in C:
+            print("Iteração {}:".format(_iter))
+            _G = MatrizAdjacencias(
+                [v.valor for v in deepcopy(self.V)], E=F+[c])
+            matriz_aux = [[0 for x in range(len(self.V))]
+                          for y in range(len(self.V))]
+            _G._verifica_ciclo(_G.V[c[0]], matriz_aux)
+            if not matriz_aux[0][0]:
+                F = F+[c]
+                print("\tNão há ciclo. Adicionando a aresta {} em F".format(c))
+                print("\tEstado atual de F: {}".format([f for f in F]))
+            else:
+                print("\tHá ciclo se adicionar a aresta {} em F".format(c))
+            _iter += 1
+        return F
+
+    def kruskal_union_find(self):
+        '''algoritmo 24.2'''
+        C = sorted(deepcopy(self.E), key=lambda e: e[2])
+        F = []  # conjunto de arestas
+        sets = [UnionFind(v.valor) for v in self.V]
+        _iter = 1
+        for c in C:
+            print("Iteração {}".format(_iter))
+            u, v = sets[c[0]], sets[c[1]]
+            print("\tTestando aresta {}-{}".format(c[0], c[1]))
+            if u.find_set() != v.find_set():
+                F = F+[c]
+                UnionFind.union(u, v)
+                print("\tAresta {}-{} adicionada".format(c[0], c[1]))
+                print("\tEstado da Union-Find:")
+                [print("\t\tVértice: {} Representante: {} Tamanho: {} Lista: {}".format(s.valor, s.representante.valor, len(s.lista), [e.valor for e in s.lista]))
+                 for s in sets[1:]]
+            else:
+                print("\tArestas com o mesmo representante {}".format(
+                    u.representante.valor))
+            _iter += 1
+        return F
+
+    def prim(self):
+        '''algoritmo 24.3'''
+        for v in self.V:
+            v.visitado = 0
+            v.predecessor = None
+        x = self.V[6]  # escolha de qualquer vértice
+        print("Iniciando pelo vértice {}".format(x.valor))
+        x.visitado = 1
+        visitados = []
+        _n = 1
+        while (len([0 for v in self.V[1:] if not v.visitado])):
+            print("Iteração: ", _n)
+            for e in sorted(deepcopy(self.E), key=lambda e: e[2]):
+                if (self.V[e[0]].visitado == 1) and (self.V[e[1]].visitado == 0):
+                    print("\tAresta mímina {}-{} adicionada com peso {}".format(e[0], e[1],
+                                                                                e[2]))
+                    self.V[e[1]].visitado = 1
+                    self.V[e[1]].predecessor = self.V[e[0]]
+                    visitados.append(
+                        [self.V[e[0]].valor, self.V[e[1]].valor])
+                    print("\tVértices visitados: {}".format(
+                        [_v.valor for _v in self.V[1:] if _v.visitado]))
+                    break
+                elif self.V[e[0]].visitado == 0 and self.V[e[1]].visitado == 1:
+                    print("\tAresta mímina {}-{} adicionada com peso {}".format(e[0], e[1],
+                                                                                e[2]))
+                    self.V[e[0]].visitado = 1
+                    self.V[e[0]].predecessor = self.V[e[1]]
+                    visitados.append(
+                        [self.V[e[1]].valor, self.V[e[0]].valor])
+                    print("\tVértices visitados: {}".format(
+                        [_v.valor for _v in self.V[1:] if _v.visitado]))
+                    break
+            _n += 1
+        print("Não há mais vértice não visitado")
+        print("Lista de arestas utilizadas: ")
+        [print(x) for x in visitados]
+
+    def prim_heap(self):
+        '''algoritmo 24.4'''
+        w = [[0 for x in range(len(self.E))] for y in range(len(self.E))]
+        for e in self.E:
+            w[e[0]][e[1]], w[e[1]][e[0]] = e[2], e[2]
+        s = self.V[6]  # escolha de qualquer vértice
+        s.visitado = 1
+        s.predecessor = None
+        # H = [None for e in range(len(self.E))]
+        H = []
+        print("Vertice {} escolhido inicialmente".format(s.valor))
+        print("Atualizando prioridade, visitado e predecessor dos vizinhos de {}"
+              .format(s.valor))
+        for v in self.vizinhanca(s):
+            print("\tAcessando o vértice {}".format(v.valor))
+            v.prioridade = -w[s.valor][v.valor]
+            v.visitado = 0
+            v.predecessor = s
+            insere_heap(H, v)
+            print("\tEstado atual da Heap: ", [h.valor for h in H])
+            print("\tpredecessor: ", end="")
+            [print(h.predecessor.valor, end=" ") if h.predecessor is not None else print(None, end=" ")
+             for h in H]
+            print("\n\tvisitado: ", end="")
+            [print(h.visitado, end=" ") for h in H]
+            print("\n\tindice: ", end="")
+            [print(h.indice, end=" ") for h in H]
+            print("\n\tprioridade: ", end="")
+            [print(h.prioridade, end=" ") for h in H]
+            print()
+        print("\nAtualizando prioridade, visitado e predecessores dos não vizinhos de {}".
+              format(s.valor))
+        for v in self.nao_vizinhanca(s):
+            print("\tAcessando o vértice {}".format(v.valor))
+            v.prioridade = -inf
+            v.visitado = 0
+            v.predecessor = None
+            insere_heap(H, v)
+            print("\tEstado atual da Heap: ", [h.valor for h in H])
+            print("\tpredecessor: ", end="")
+            [print(h.predecessor.valor, end=" ") if h.predecessor is not None else print(None, end=" ")
+             for h in H]
+            print("\n\tvisitado: ", end="")
+            [print(h.visitado, end=" ") for h in H]
+            print("\n\tindice: ", end="")
+            [print(h.indice, end=" ") for h in H]
+            print("\n\tprioridade: ", end="")
+            [print(h.prioridade, end=" ") for h in H]
+            print()
+        while len(H) > 0:
+            print("\nRevomendo o vértice {} da heap".format(H[0].valor))
+            v, H = remove_heap(H)
+            v.visitado = 1
+            for x in self.vizinhanca(v):
+                if x.visitado == 0 and x.prioridade < -w[v.valor][x.valor]:
+                    x.predecessor = v
+                    altera_heap(H, x.indice, -w[v.valor][x.valor])
+            print("Prioridades atualizadas da Heap: ", [h.valor for h in H])
+        print("\nÁrvore geradora com os predecessores")
+        for v in self.V[1:]:
+            predecessor = "None" if v.predecessor is None else v.predecessor.valor
+            print("Vertice: {}, prioridade: {}, predecessor: {}".format(
+                v.valor, v.prioridade, predecessor))
 
 
 class MatrizAdjacenciasDigrafo(MatrizAdjacencias):
@@ -141,9 +366,63 @@ class MatrizAdjacenciasDigrafo(MatrizAdjacencias):
             self.matriz[e[0]][e[1]] = 1
         self.pre_ordem, self.pos_ordem, self.pos_ordem_reversa = [], [], []
 
+    @ staticmethod
+    def reverso(G):
+        E = deepcopy(G.E)
+        for e in E:
+            e[0], e[1] = e[1], e[0]
+        return MatrizAdjacenciasDigrafo([v.valor for v in G.V], E)
+
+    def componentes_fortemente_conexas(self):
+        '''algoritmo 23.13'''
+        for v in self.V[1:]:
+            v.visitado = 0
+            v.predecessor = None
+        inverso = self.reverso(self)
+        print("Iniciando com a busca de componentes")
+        inverso.busca_componentes()
+        print("Fim da busca de componentes")
+        for v in inverso.V[1:]:
+            v.visitado = 0
+        print("Estado da pós-ordem reversa: {}".format(
+            [i.valor for i in inverso.pos_ordem_reversa]))
+        _iter = 1
+        for u in inverso.pos_ordem_reversa:
+            print("\nIteração: {}".format(_iter))
+            if self.V[u.valor].visitado == 0:
+                print("Acessando o vértice {}".format(u.valor))
+                print("Adicionando o vértice {} na componente {}".format(
+                    u.valor, u.valor))
+                self.V[u.valor].componente = u.valor
+                print("Chamando busca em profundidade para o vértice {}".format(
+                    u.valor))
+                self.busca_profundidade(self.V[u.valor])
+            else:
+                print("Vértice {} já visitado. Está na componente {}".format(
+                    u.valor, u.componente))
+            _iter += 1
+
+    def ordenacao_topologica(self):
+        '''algoritmo 23.14'''
+#        print("Fazendo a chamada para para busca de componentes")
+        self.busca_componentes()
+#        print("Fim da busca de componentes")
+        f = []
+        print("Estado da lista de pós-ordem reversa: {}".format(
+            [v.valor for v in self.pos_ordem_reversa]))
+        _iter = 1
+        for atual in self.pos_ordem_reversa:
+            print("Iteração {}: Adicionando o vértice {} na lista".format(
+                _iter, atual.valor))
+            f.append(atual)
+            _iter += 1
+        return f
+
     def _arco(self, s, v):
         self.matriz[s.valor][v.valor] = 0
+        #print("Chamada busca em profundidade")
         self.chama_busca(v, tipo_busca='profundidade')
+        #print("Fim da busca em profundidade")
         if self.V[s.valor].visitado:
             self.matriz[s.valor][v.valor] = 1
             return True
@@ -158,8 +437,9 @@ class MatrizAdjacenciasDigrafo(MatrizAdjacencias):
         i = 1
         vizinhos = self.vizinhanca(W[i])
         while(len(vizinhos) >= 1):
-            print("Acessando o vértice {}".format(W[i].valor))
-            print("Vizinhos: {}".format(
+            print("Iteração {} :".format(i))
+            print("\tAcessando o vértice {}".format(W[i].valor))
+            print("\tVizinhos: {}".format(
                 [vizinho.valor for vizinho in vizinhos]))
             seguro = False
             for y in vizinhos:
@@ -167,17 +447,17 @@ class MatrizAdjacenciasDigrafo(MatrizAdjacencias):
                     seguro = True
                     break
             if seguro:
-                print("Há arco seguro entre {} e {}".format(
+                print("\tHá arco seguro entre {} e {}".format(
                     W[i].valor, y.valor))
                 W[i+1] = y
             else:
                 print(
-                    "Não há arco seguro saindo do vértice {}".format(W[i].valor))
+                    "\tNão há arco seguro saindo do vértice {}".format(W[i].valor))
                 W[i+1] = vizinhos[0]
             # remove aresta em D
             self.matriz[W[i].valor][W[i+1].valor] = 0
             i += 1
             vizinhos = self.vizinhanca(W[i])
-        [print(w.valor, end=" ") for w in W[1:]]
-        print()
+            print("\tEstado atual da trilha: {}".format(
+                [w.valor for w in W if w is not None]))
         return W
