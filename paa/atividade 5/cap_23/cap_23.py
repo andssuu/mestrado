@@ -65,7 +65,7 @@ if __name__ == "__main__":
     print(">>>>>>>>>>>>>>>>>>>>>>>>> Constrói Caminho em Digrafo (23.4) <<<<<<<<<<<<<<<<<<<<<<<<<")
     print("Caminho {}-{}: ".format(s, v), [l.valor for l in G_digrafo.constroi_caminho(G_digrafo.V[s],
                                                                                        G_digrafo.V[v])])
-    print(">>>>>>>>>>>>>>>>>>>>>>>>> Componentes Fortemente (23.13) <<<<<<<<<<<<<<<<<<<<<<<<<")
+    print(">>>>>>>>>>>>>>>>>>>>>>>>> Componentes Fortemente Conexas (23.13) <<<<<<<<<<<<<<<<<<<<<<<<<")
     G_digrafo_reverso = MatrizAdjacenciasDigrafo.reverso(G_digrafo)
     print("Matriz de adjacencias digrafo reverso: ")
     [print(x) for x in G_digrafo_reverso.matriz[1:]]
